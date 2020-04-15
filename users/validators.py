@@ -8,6 +8,3 @@ def validate_file_extension(value):
     if not ext.lower() in valid_extensions:
         raise ValidationError('Unsupported file extension.')
 
-def validate_mobile_number(value):
-    pass
-

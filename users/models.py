@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from phone_field import PhoneField
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+from django.core.validators import RegexValidator
 
-from users.validators import validate_file_extension, validate_mobile_number
+
+from users.validators import validate_file_extension
 from users.managers import CustomUserManager
 
 from plasma_for_covid import settings
@@ -11,8 +14,8 @@ from plasma_for_covid import settings
 class User(AbstractUser):
     
     user_options = [("DONOR", "Donor"), ("HOSPITAL", "Hospital")]
-    user_type = models.CharField(max_length=20, choices=user_options)
-    email = models.EmailField('email address', unique=True, blank=False, null=False)
+    user_type = models.CharField(max_length=20, choices=user_options, null=False, blank=False)
+    email = models.EmailField('email address', unique=True, null=True)
     username = None
 
     USERNAME_FIELD = 'email'
@@ -26,27 +29,48 @@ class User(AbstractUser):
 
 class DonorProfile(models.Model):
     """
-    Donor profile details. 
-    
+    Donor profile details.
+
     :parameter
     user : One to one mapping with the django user model
     birth_day : Date of Birth of user
     email : Email Address of the Donor
     mobile_number : Mobile Number of Donor (optional)
     report : COVID Report of Donor
-    
+
     """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    location = models.CharField(max_length=30, blank=False, null=False)
-    birth_date = models.DateField(null=False, blank=False)
-    mobile_number = PhoneField(blank=True, help_text='Contact Number', validators=[validate_mobile_number])
-    report = models.FileField(null=False, blank=False, validators=[validate_file_extension])
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,primary_key=True)
+    is_complete = models.BooleanField(default=False)
+    location = models.CharField(max_length=30, null=True,blank=True)
+    birth_date = models.DateField(null=True,blank=True)
+
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    mobile_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+    report = models.FileField("COVID19 Report",null=True,blank=True, validators=[validate_file_extension],upload_to='donor_reports',)
 
 
 class HospitalProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    hospital_name = models.CharField(max_length=100, blank=False, null=False)
-    hospital_address = models.TextField(max_length=500, blank=False, null=False)
-    location = models.CharField(max_length=30, blank=False)
-    mobile_number = PhoneField(blank=False, help_text='Contact Number')
-    mci_registeration_number = models.CharField(max_length=50, blank=False, null=False)
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,primary_key=True)
+    is_complete = models.BooleanField(default=False)
+    hospital_name = models.CharField(max_length=100, null=True,blank=True)
+    hospital_address = models.TextField(max_length=500, null=True,blank=True)
+    location = models.CharField(max_length=30, null=True,blank=True)
+    phone_regex = RegexValidator(regex=r'^\+?91?\d{9,10}$',
+                                 message="Phone number must be entered in the format: '+91xxxxxxxxxx'. Up to 9-10 digits allowed.")
+    mobile_number = models.CharField(validators=[phone_regex], max_length=15, blank=True)
+    mci_registeration_number = models.CharField(max_length=50, null=True,blank=True)
+
+
+@receiver(post_save, sender=User)
+def build_profile_on_user_creation(sender, instance, created, **kwargs):
+  if created:
+    if instance.user_type == "DONOR":
+        profile = DonorProfile.objects.create(user=instance)
+    else:
+        profile = HospitalProfile.objects.create(user=instance)
+
+    profile.save()
+
+
