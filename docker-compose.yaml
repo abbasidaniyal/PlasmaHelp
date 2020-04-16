@@ -14,9 +14,7 @@ services:
       - db:db
   db:
     image: kartoza/postgis:12.0
-    environment:
-      - POSTGRES_USER=<DB_USER>
-      - POSTGRES_PASS=<DB_PASS>
-      - POSTGRES_DBNAME=<DB_NAME>
+    env_file:
+      - ./.env_postgis
 
 
