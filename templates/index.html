@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+    {% if messages %}
+{% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+    {% endif %}
+{#    {% block messages %}#}
+{#        {% if messages %}#}
+{##}
+{#            #}
+{##}
+{#        {% endif %}#}
+{##}
+{#    {% endblock %}#}
     <h1>THIS IS THE INDEX PAGE</h1>
 
 {% endblock %}

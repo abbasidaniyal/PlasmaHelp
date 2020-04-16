@@ -1,31 +1,36 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import FormView, CreateView, UpdateView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.urls import  reverse
-
-from users.models import *
-from users.forms import *
-
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import CreateView, UpdateView
+
+from users.forms import *
 
 
 def home_page(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
+
 
 class LoginPageView(LoginView):
     template_name = 'login_page.html'
-    redirect_field_name = 'home-page'
     redirect_authenticated_user = True
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+
+        return response
+
 
 class LogoutPageView(LogoutView):
     next_page = 'home-page'
-    template_name = 'logout_page.html'
-    extra_context = {
-        "logout" : "logout"
-    }
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.add_message(request, messages.INFO, 'Successfully logged out.')
+        return response
 
 
 class DonorRegisterView(CreateView):
@@ -34,17 +39,13 @@ class DonorRegisterView(CreateView):
     success_url = '/login/?next/signup_donor/'
 
 
-
-
 class HospitalRegisterView(CreateView):
-
     form_class = HospitalUserForm
     template_name = 'register_hospital.html'
     success_url = '/login/?next=signup_hospital'
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
-
     template_name = 'profile.html'
     success_url = '/'
 

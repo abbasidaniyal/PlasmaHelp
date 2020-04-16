@@ -1,6 +1,20 @@
-{% load crispy_forms_tags %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" value="Update">
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load crispy_forms_tags %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="row">
+            <input class="submit-button" type="submit" value="Update">
+            <button onclick="goBack()">Back</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
