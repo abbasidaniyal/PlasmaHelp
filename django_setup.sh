@@ -1,6 +1,7 @@
 #!/bin/sh
 
-sleep 10
+echo "Waiting for PostGIS Server to restart"
+sleep 60
 
 python manage.py makemigrations
 python manage.py migrate

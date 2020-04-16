@@ -12,9 +12,11 @@ services:
       - db
     links:
       - db:db
+
   db:
     image: kartoza/postgis:12.0
     env_file:
       - ./.env_postgis
+
 
 
