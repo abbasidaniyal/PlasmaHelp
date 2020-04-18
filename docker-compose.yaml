@@ -17,6 +17,5 @@ services:
     image: kartoza/postgis:12.0
     env_file:
       - ./.env_postgis
-
-
-
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
