@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Donor List</h1>
+
+<ul>
+{% for donor in object_list %}
+    <li>
+        {{ donor.user.get_full_name }}
+        <a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a>
+        <a href="media/{{ donor.report }}" target="_blank">Report</a>
+{#    {{ donor.report }}#}
+    </li>
+{% empty %}
+    <li>No Donors Nearby. Try increasing the distance filter</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

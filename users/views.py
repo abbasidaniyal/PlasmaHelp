@@ -1,11 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.urls import  reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 
 from users.forms import *
 
@@ -83,3 +82,19 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         form.instance = obj
         form.save()
         return HttpResponseRedirect(self.success_url)
+
+
+class NearbyDonorView(LoginRequiredMixin, ListView):
+    template_name = 'nearby_donor.html'
+    model = DonorProfile
+    paginate_by = 20
+
+    def get_queryset(self):
+        distance = self.request.get("filter", 50)
+        lst = []
+        for donor in DonorProfile.objects.all():
+            if self.request.user.hospitalprofile.location.distance(donor.location) * 100 <= distance:
+                print(self.request.user.hospitalprofile.location.distance(donor.location) * 100)
+                lst.append(donor)
+
+        return lst

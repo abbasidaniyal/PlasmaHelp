@@ -9,4 +9,5 @@ urlpatterns = [
     path('register_donor/', DonorRegisterView.as_view(), name='register-donor'),
     path('register_hospital/', HospitalRegisterView.as_view(), name='register-hospital'),
     path('profile/', ProfileView.as_view(), name='profile'),
+    path('hospital_dashboard',NearbyDonorView.as_view(),name="hospital-dashboard")
 ]
