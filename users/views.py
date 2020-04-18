@@ -36,13 +36,13 @@ class LogoutPageView(LogoutView):
 class DonorRegisterView(CreateView):
     form_class = DonorUserForm
     template_name = 'register_donor.html'
-    success_url = '/login/?next/signup_donor/'
+    success_url = '/login/'
 
 
 class HospitalRegisterView(CreateView):
     form_class = HospitalUserForm
     template_name = 'register_hospital.html'
-    success_url = '/login/?next=signup_hospital'
+    success_url = '/login/'
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
