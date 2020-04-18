@@ -3,7 +3,7 @@
 ###### Check Issue tracker for updates
 This is a simple website used to connect Donors of Plasma and Hospitals for the treatment of COVID19. Plasma therapy is recently started in India and this website will act as a platform to connect nearby donor with hospitals the require plasma.
 
-## Steps for local development
+## Steps for local development manually
 
 1. Clone the repository by running the following command in the terminal :
    ```shell
@@ -39,3 +39,30 @@ This is a simple website used to connect Donors of Plasma and Hospitals for the 
    python manage.py runserver
    ```
  Your website will be up and running at http://localhost:8000
+ 
+ ## Using Docker Compose
+ 
+ 1. Create a .env file and a .env_postgis file from the .env.sample file and  .env_postgis.sample. Simply copy the contents and setup required environment variables.
+ 
+     Note : Make sure that the db settings in both the files are same.
+ 
+ 2. Install Docker and Docker-compose in your system. Use the following commands.
+ 
+    For docker : https://docs.docker.com/get-docker/
+    
+    For docker-compose : https://docs.docker.com/compose/install/
+    
+ 3. Create an empty directory named `postgres`. This will be the volume mount point for the db.
+     ```shell script
+    mkdir postgres
+    ```
+ 4. If you simply wish to run the project, use the following command:
+    
+    ```shell script
+     docker-compose up 
+    ``` 
+ 5. If you want to develop using auto reload, use
+    ```shell script
+     docker-compose up db
+    ```
+    This will start the database container. Then you can start django by running `./django_setup.sh`
