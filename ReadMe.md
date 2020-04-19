@@ -2,7 +2,15 @@
 ##### UNDER DEVELOPMENT
 ###### Check Issue tracker for updates
 This is a simple website used to connect Donors of Plasma and Hospitals for the treatment of COVID19. Plasma therapy is recently started in India and this website will act as a platform to connect nearby donor with hospitals the require plasma.
+## Google Maps API
+1. This project uses google maps API. Go to https://console.cloud.google.com/ and create a new project.
+2. Create an API key
+3. Activate the following services for the API key
+- Geolocation API
+- Maps Javascript API
+- Places API
 
+Add the API KEY to the .env file. (Follow the installation below)
 ## Steps for local development manually
 
 1. Clone the repository by running the following command in the terminal :

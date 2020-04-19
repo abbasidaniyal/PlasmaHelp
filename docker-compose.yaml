@@ -19,3 +19,5 @@ services:
       - ./.env_postgis
     volumes:
       - ./postgres:/var/lib/postgresql/data
+    ports:
+    - 5432:5432

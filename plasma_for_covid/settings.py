@@ -19,13 +19,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", default="foo")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="*").split(" ")
 
 # Application definition
 
@@ -41,7 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'users',
     'django_extensions',
-
+    'mapwidgets',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -92,6 +91,20 @@ DATABASES = {
     }
 }
 
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "india"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'in'}}),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": os.environ.get("GOOGLE_API_KEY", )
+}
+
+GOOGLE_MAP_API_KEY = os.environ.get("GOOGLE_API_KEY", )
+
+
+# from plasma_for_covid.local_settings import DATABASES, MAP_WIDGETS, GOOGLE_MAP_API_KEY
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.User'
