@@ -2,20 +2,115 @@
 
 {% block content %}
 
-<h1>Donor List</h1>
+    <h1>Donor List</h1>
 
-<ul>
-{% for donor in object_list %}
-    <li>
-        {{ donor.user.get_full_name }}
-        <a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a>
-        <a href="media/{{ donor.report }}" target="_blank">Report</a>
-{#    {{ donor.report }}#}
-    </li>
-{% empty %}
-    <li>No Donors Nearby. Try increasing the distance filter</li>
-{% endfor %}
-</ul>
+    <form method="get" action="{% url 'hospital-dashboard' %}">
+        <label for="kmInput">
+            Circle Radius
+        </label>
+        <input name="filter" type="number" id="kmInput" placeholder="Enter Kilometers" value="{{ filter }}"
+               default="50"> KM
+        <input type="button" value="Search" id="click">
+    </form>
+
+
+
+    <ul>
+        {% for donor in object_list %}
+            <li>
+
+
+                <div class="card">
+
+
+                    <h4>{{ donor.user.get_full_name }}</h4>
+                    <h6>Email: {{ donor.user.email }}</h6>
+                    <h6><a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a></h6>
+                    <h6><a href="media/{{ donor.report }}" target="_blank">Report</a></h6>
+
+
+                </div>
+
+
+                {#    {{ donor.report }}#}
+            </li>
+        {% empty %}
+            <li>No Donors Nearby. Try increasing the distance filter</li>
+        {% endfor %}
+    </ul>
+
+
+
+    <script>
+
+        $("#click").click(function () {
+            window.location = '?filter=' + $("#kmInput").val()
+        });
+
+
+    </script>
+    <script>
+        const slider = $("#calculatorSlider");
+        const developerBtn = $("#developerBtn");
+        const corporateBtn = $("#corporateBtn");
+        const privateBtn = $("#privateBtn");
+        const reseller = $("#resellerEarnings");
+        const client = $("#clientPrice");
+        const percentageBonus = 30; // = 30%
+        const license = {
+            corpo: {
+                active: true,
+                price: 319,
+            },
+            dev: {
+                active: false,
+                price: 149,
+            },
+            priv: {
+                active: false,
+                price: 79,
+            }
+        }
+
+        function calculate(price, value) {
+            client.text((Math.round((price - (value / 100 * price)))) + '$');
+            reseller.text((Math.round(((percentageBonus - value) / 100 * price))) + '$')
+        }
+
+        function reset(price) {
+            slider.val(0);
+            client.text(price + '$');
+            reseller.text((Math.round((percentageBonus / 100 * price))) + '$');
+        }
+
+        developerBtn.on('click', function (e) {
+            license.dev.active = true;
+            license.corpo.active = false;
+            license.priv.active = false;
+            reset(license.dev.price)
+        });
+        privateBtn.on('click', function (e) {
+            license.dev.active = false;
+            license.corpo.active = false;
+            license.priv.active = true;
+            reset(license.priv.price);
+        });
+        corporateBtn.on('click', function (e) {
+            license.dev.active = false;
+            license.corpo.active = true;
+            license.priv.active = false;
+            reset(license.corpo.price);
+        });
+        slider.on("input change", function (e) {
+            if (license.priv.active) {
+                calculate(license.priv.price, $(this).val());
+            } else if (license.corpo.active) {
+                calculate(license.corpo.price, $(this).val());
+            } else if (license.dev.active) {
+                calculate(license.dev.price, $(this).val());
+            }
+        })
+    </script>
 
 
 {% endblock %}

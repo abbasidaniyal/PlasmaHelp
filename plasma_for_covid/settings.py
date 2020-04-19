@@ -104,7 +104,7 @@ MAP_WIDGETS = {
 GOOGLE_MAP_API_KEY = os.environ.get("GOOGLE_API_KEY", )
 
 
-from plasma_for_covid.local_settings import DATABASES, MAP_WIDGETS, GOOGLE_MAP_API_KEY
+# from plasma_for_covid.local_settings import DATABASES, MAP_WIDGETS, GOOGLE_MAP_API_KEY
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.User'

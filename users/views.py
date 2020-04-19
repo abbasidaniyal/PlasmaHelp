@@ -3,14 +3,17 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, UpdateView, ListView
-
+from django.core.exceptions import PermissionDenied
 from users.forms import *
 
 
 def home_page(request):
     return render(request, 'index.html')
+
+def about_page(request):
+    return render(request, 'about.html')
 
 
 class LoginPageView(LoginView):
@@ -87,14 +90,38 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 class NearbyDonorView(LoginRequiredMixin, ListView):
     template_name = 'nearby_donor.html'
     model = DonorProfile
-    paginate_by = 20
+    paginate_by = 50
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.user_type == "DONOR":
+            raise PermissionDenied
+
+        elif request.user.hospitalprofile.is_complete is False:
+            messages.warning(request, 'Complete your profile in order to view the Dashboard')
+            return redirect('profile',)
+        else:
+            response = super().dispatch(request, *args, **kwargs)
+        return response
 
     def get_queryset(self):
-        distance = self.request.get("filter", 50)
-        lst = []
-        for donor in DonorProfile.objects.all():
-            if self.request.user.hospitalprofile.location.distance(donor.location) * 100 <= distance:
-                print(self.request.user.hospitalprofile.location.distance(donor.location) * 100)
-                lst.append(donor)
+        try:
+            distance = int(self.request.GET.get("filter", "50"))
+        except ValueError:
+            distance = 50
 
+        lst = []
+        for donor in DonorProfile.objects.all().filter(is_complete=True):
+            if self.request.user.hospitalprofile.location.distance(donor.location) * 100 <= distance:
+                lst.append(donor)
         return lst
+
+    def get_context_data(self, **kwargs):
+        context = super(NearbyDonorView, self).get_context_data(**kwargs)
+
+        try:
+            context['filter'] = int(self.request.GET.get('filter', '50'))
+        except ValueError:
+            context['filter'] = 50
+
+        return context
