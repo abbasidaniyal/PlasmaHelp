@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <section id="login-form-page">
+    <div id="content-container" class="container p-none">
+      <div id="login-form-container" class="lgn-container col-lg-8">
+        <h2>Login</h2>
+        <form id="login-form" method="post">
+          {% csrf_token %}
+        
+          {{ form | crispy}}
+          {% if form.errors %}
+            <p class=" label label-danger">
+              Your email and password didn't match.
+              Please try again.
+            </p>
+          {% endif %}
+
+          <input class="btn submit-button" type="submit" value="Login"/>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

@@ -1,52 +1,47 @@
-{% block content %}
+{% load static %}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Plasma Donor Finder</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<!-- ======= Header ======= -->
+<link href="{% static 'css/header.css' %}" rel="stylesheet">
+<header id="header" class="fixed-top d-flex align-items-center">
+  <div class="container d-flex align-items-center">
 
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        {% if user.user_type == "HOSPITAL" %}
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{% url 'hospital-dashboard' %}">Dashboard</a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                        </li>
+    <div class="logo mr-auto">
+      <h1 class="text-light"><a href="/"><span>Plasmodium</span></a></h1>
+    </div>
 
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'register-donor' %}">Donor Signup</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'register-hospital' %}">Hospital Signup</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#contact">Contact</a></li>
 
+        {% if user.is_authenticated %}
+          {% if user.user_type == "HOSPITAL" %}
+            <li><a class="nav-link" href="{% url 'hospital-dashboard' %}">Dashboard</a>  </li>
+          {% endif %}
 
-{% endblock %}
+          <li><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+          <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
 
+        {% else %}
+          <li><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+          <li class="drop-down"><a href="">Sign Up</a>
+            <ul>
+              <li><a href="#">As sDonor</a></li>
+              <li><a href="#">For Hospitals</a>
+              {% comment %} <li class="drop-down"><a href="#">Hospital Signup</a> {% endcomment %}
+                {% comment %} <ul>
+                  <li><a href="#">Maza</a></li>
+                  <li><a href="#">aagaya</a></li>
+                </ul> {% endcomment %}
+              </li>
+            </ul>
+          </li>
+        {% endif %}
+
+      </ul>
+    </nav><!-- .nav-menu -->
+
+  </div>
+</header><!-- End Header -->

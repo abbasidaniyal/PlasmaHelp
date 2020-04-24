@@ -17,7 +17,7 @@ def about_page(request):
 
 
 class LoginPageView(LoginView):
-    template_name = 'login_page.html'
+    template_name = 'login.html'
     redirect_authenticated_user = True
 
     def dispatch(self, request, *args, **kwargs):
