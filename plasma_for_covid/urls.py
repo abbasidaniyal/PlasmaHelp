@@ -18,7 +18,10 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from plasma_for_covid import settings
 
-urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', include('users.urls')),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from content.views import home_page, about_page	
+
+urlpatterns = [	urlpatterns = [
+    path("admin/", admin.site.urls),	                  path('admin/', admin.site.urls),
+    path("users/", include("users.urls")),	                  path('', include('users.urls')),
+    path("", include("content.urls")),	              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
