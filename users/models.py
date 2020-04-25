@@ -63,7 +63,7 @@ class DonorProfile(models.Model):
     )
 
     def __str__(self):
-        if self.user.get_full_name() == None:
+        if self.user.get_full_name() != None:
             return self.user.get_full_name()
         else:
             return "NOT CREATE"
