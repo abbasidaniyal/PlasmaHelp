@@ -11,8 +11,30 @@
         <h2>Login</h2>
         <form id="login-form" method="post">
           {% csrf_token %}
+
+          {{ form.non_field_errors }}
+
+          {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+          {% endfor %}
+
+          <table border="1">
+            {% for field in form.visible_fields %}
+              <tr>
+                <th>{{ field.label_tag }}</th>
+                <td>
+                  {{ field.errors }}
+                  {{ field }}
+                  {{ field.help_text }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
         
-          {{ form | crispy}}
+          <button class="btn submit-button" type="submit">Login</button>
+          </form>
+
           {% if form.errors %}
             <p class=" label label-danger">
               Your email and password didn't match.
@@ -20,7 +42,7 @@
             </p>
           {% endif %}
 
-          <input class="btn submit-button" type="submit" value="Login"/>
+          
         </form>
       </div>
     </div>

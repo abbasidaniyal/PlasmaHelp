@@ -1,0 +1,48 @@
+#header {
+  background: linear-gradient(#0a0099, transparent) !important;
+}
+
+
+#login-form-page {
+  padding: 8em 2em;
+  background: linear-gradient(#0a0099, #010351);
+}
+
+#login-form-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin: auto;
+}
+#login-form-container h2 {
+  color: #fff;
+  text-align: left;
+  font-weight: 600;
+  /* width: 100%; */
+}
+
+#login-form {
+  padding: 1em;
+  margin: auto;
+
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+#login-form .submit-button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 30px;
+  border-radius: 10px;
+  transition: 0.5s;
+  color: #fff;
+  width: 100%;
+  background: #1acc8d;
+}
+#login-form .submit-button:hover {
+  background: #17b57d;
+}

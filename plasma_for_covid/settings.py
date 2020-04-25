@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'plasma_for_covid.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3", # os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "ENGINE": "django.contrib.gis.db.backends.postgis", # os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
         "NAME": "testdb", # os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
         "USER": "postgres", # os.environ.get("SQL_USER", "user"),
         "PASSWORD": "postgres", # os.environ.get("SQL_PASSWORD", "password"),
