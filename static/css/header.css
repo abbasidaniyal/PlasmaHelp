@@ -6,7 +6,7 @@ header {
   transition: all 0.5s;
   z-index: 997;
   transition: all 0.5s;
-  background: linear-gradient(#07006e, #0a0099);
+  background: linear-gradient(#070066, #0a0099)
 }
 
 header.header-scrolled {
