@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+        {% for faq in object_list %}
+            <li>
+                <div class="card">
+                    <h4>Q. {{ faq.question }}</h4>
+                    <h6>A. {{ faq.response }}</h6>
+                </div>
+            </li>
+        {% empty %}
+            <li>No FAQs</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

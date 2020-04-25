@@ -1,8 +1,6 @@
 from django.urls import path, include
 
 from users.views import (
-    home_page,
-    about_page,
     LoginPageView,
     LogoutPageView,
     DonorRegisterView,
@@ -14,8 +12,6 @@ from users.views import (
 from django.contrib.auth import views as views
 
 urlpatterns = [
-    path("", home_page, name="home-page"),
-    path("about/", about_page, name="about"),
     path("login/", LoginPageView.as_view(), name="login"),
     path("logout/", LogoutPageView.as_view(), name="logout"),
     path("register_donor/", DonorRegisterView.as_view(), name="register-donor"),

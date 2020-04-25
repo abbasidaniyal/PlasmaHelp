@@ -14,14 +14,6 @@ from users.forms import *
 from users.utils import send_mail, TokenGenerator
 
 
-def home_page(request):
-    return render(request, "index.html")
-
-
-def about_page(request):
-    return render(request, "about.html")
-
-
 def activate(request, uidb64, token):
     # try:
     print(uidb64, token)
