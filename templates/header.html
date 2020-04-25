@@ -28,8 +28,8 @@
           <li><a class="nav-link" href="{% url 'login' %}">Login</a></li>
           <li class="drop-down"><a href="">Sign Up</a>
             <ul>
-              <li><a href="#">As sDonor</a></li>
-              <li><a href="#">For Hospitals</a>
+              <li><a href="{% url 'register-donor' %}">As Donor</a></li>
+              <li><a href="{% url 'register-hospital' %}">For Hospitals</a>
               {% comment %} <li class="drop-down"><a href="#">Hospital Signup</a> {% endcomment %}
                 {% comment %} <ul>
                   <li><a href="#">Maza</a></li>

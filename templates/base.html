@@ -72,25 +72,6 @@
 		{% endif %}
 	</div>
 
-<<<<<<< HEAD
 	{% include 'footer.html' %}
-=======
-{% include 'header.html' %}
-
-<div class="content container">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    <div class="row">
-        <div class="col-md-8" style="padding-top: 10vh">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
-</div>
-{% include 'footer.html' %}
->>>>>>> 3292dd2534504b1d48368bd7afcb3634d353ffe1
 </body>
 </html>
