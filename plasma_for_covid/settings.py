@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "phone_field",
     "crispy_forms",
     "users",
+    "content",
     "django_extensions",
     "mapwidgets",
 ]
