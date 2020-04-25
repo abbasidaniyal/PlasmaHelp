@@ -1,3 +1,4 @@
+
 """
 Django settings for plasma_for_covid project.
 
@@ -39,7 +40,6 @@ INSTALLED_APPS = [
     "phone_field",
     "crispy_forms",
     "users",
-    "content",
     "django_extensions",
     "mapwidgets",
 ]
@@ -82,12 +82,12 @@ WSGI_APPLICATION = "plasma_for_covid.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": "django.contrib.gis.db.backends.postgis", # os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": "testdb", # os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": "postgres", # os.environ.get("SQL_USER", "user"),
+        "PASSWORD": "postgres", # os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": "localhost", # os.environ.get("SQL_HOST", "localhost"),
+        "PORT": "5432", # os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -141,12 +141,13 @@ LOGIN_REDIRECT_URL = "/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = "static/"
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static/'),
+)
 
-MEDIA_ROOT = "media/"
-MEDIA_URL = "/media/"
-
+MEDIA_ROOT = '/media/'
+MEDIA_URL = 'media/'
 
 # Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

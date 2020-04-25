@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none !important;
+}
+
+section {
+  padding: 2em 0;
+}

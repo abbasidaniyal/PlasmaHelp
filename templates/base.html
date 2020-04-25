@@ -1,35 +1,78 @@
-<html>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    {% load static %}
-    <title>Plasma Donor Finder</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Plasma Donor Finder</title>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    {% if form %}
-        {{ form.media }}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'css/global.css' %}">
+  <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+	<link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
-    {% endif %}
+	<!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{%static 'vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+	<link href="{%static 'vendor/icofont/icofont.min.css'%}" rel="stylesheet">
+	{% comment %} <link href="{%static 'vendor/aos/aos.css'%}" rel="stylesheet"> {% endcomment %}
+  <link href="{%static 'vendor/venobox/venobox.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/remixicon/remixicon.css'%}" rel="stylesheet">
+  <link href="{%static 'vendor/owl.carousel/assets/owl.carousel.min.css'%}" rel="stylesheet">
+
+	<!-- Vendor JS Files -->
+  <script src="{%static 'vendor/venobox/venobox.min.js'%}"></script>
+  <script src="{%static 'vendor/counterup/counterup.min.js'%}"></script>
+  <script src="{%static 'vendor/owl.carousel/owl.carousel.min.js'%}"></script> 
+  {% comment %} <script src="{%static 'vendor/aos/aos.js'%}"></script> {% endcomment %}
+  <script src="{%static 'vendor/jquery.easing/jquery.easing.min.js'%}"></script>
+  <script src="{%static 'vendor/waypoints/jquery.waypoints.min.js'%}"></script>
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/template.css' %}" rel="stylesheet">
+
+  <!-- Template Main JS File -->
+  <script src="{%static 'js/main.js'%}"></script>
+
+  <!-- =======================================================
+  * Template Name: Bootslander - v2.1.0
+  * Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+	{% if form %}
+		{{ form.media }}
+	{% endif %}
 </head>
 
 <body>
+	{% include 'header.html' %}
+	
+	<div class="content container">
+		{% if messages %}
+			{% for message in messages %}
+				<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+	
+	{% block content %}
+	{% endblock %}
 
-{% include 'header.html' %}
-
-<div class="content container">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    <div class="row">
-        <div class="col-md-8" style="padding-top: 10vh">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
-</div>
-{% include 'footer.html' %}
+	{% include 'footer.html' %}
 </body>
 </html>
