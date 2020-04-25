@@ -15,10 +15,6 @@ def home_page(request):
     return render(request, "index.html")
 
 
-def about_page(request):
-    return render(request, "about.html")
-
-
 class QueryPageView(SuccessMessageMixin, CreateView):
     form_class = QueryForm
     template_name = "content/query_page.html"

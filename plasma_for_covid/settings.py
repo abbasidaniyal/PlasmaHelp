@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "phone_field",
     "crispy_forms",
     "users",
+    "content",
     "django_extensions",
     "mapwidgets",
 ]
@@ -81,12 +82,14 @@ WSGI_APPLICATION = "plasma_for_covid.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis", # os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": "testdb", # os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": "postgres", # os.environ.get("SQL_USER", "user"),
-        "PASSWORD": "postgres", # os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": "localhost", # os.environ.get("SQL_HOST", "localhost"),
-        "PORT": "5432", # os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": os.environ.get(
+            "SQL_ENGINE", "django.contrib.gis.db.backends.postgis"
+        ),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -100,7 +103,6 @@ MAP_WIDGETS = {
 }
 
 GOOGLE_MAP_API_KEY = os.environ.get("GOOGLE_API_KEY",)
-
 
 # from plasma_for_covid.local_settings import DATABASES, MAP_WIDGETS, GOOGLE_MAP_API_KEY
 
@@ -118,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -140,13 +141,11 @@ LOGIN_REDIRECT_URL = "/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static/'),
-)
+STATIC_URL = "/static/"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static/"),)
 
-MEDIA_ROOT = '/media/'
-MEDIA_URL = 'media/'
+MEDIA_ROOT = "media/"
+MEDIA_URL = "/media/"
 
 # Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
