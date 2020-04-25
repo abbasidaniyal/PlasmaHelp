@@ -1,6 +1,6 @@
 from django import forms
 
-from content.models import FAQ, Query
+from content.models import Query
 
 
 class QueryForm(forms.ModelForm):

@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<section class="container">
-		<h1>Frequently Asked Questions</h1>
-		<p>Here are some things you might wanna know</p>
+    <section class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p>Here are some things you might wanna know</p>
 
-		<div class="container">
-			<ul>
-				{% for faq in object_list %}
-					<li>
-						<div class="card">
-							<h4>Q. {{ faq.question }}</h4>
-							<h6>A. {{ faq.response }}</h6>
-						</div>
-					</li>
-	
-					{% empty %}
-						<li>No FAQs</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</section>
+        <div class="container">
+
+            {% for faq in object_list %}
+
+                <div class="card" style="margin: 2em; padding: 2em">
+                    <h4>Q. {{ faq.question }}</h4>
+                    <h6>{{ faq.response }}</h6>
+                </div>
+
+
+            {% empty %}
+
+            {% endfor %}
+
+        </div>
+    </section>
 {% endblock %}

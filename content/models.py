@@ -16,5 +16,5 @@ class Query(models.Model):
 
 
 class FAQ(models.Model):
-    question = models.TextField("Question", max_length=200)
-    response = models.TextField("Answer", max_length=200)
+    question = models.TextField("Question", max_length=1000)
+    response = models.TextField("Answer", max_length=1000)

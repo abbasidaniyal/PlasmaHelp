@@ -7,14 +7,14 @@
   <div class="container d-flex align-items-center">
 
     <div class="logo mr-auto">
-      <h1 class="text-light"><a href="/"><span>Plasmodium</span></a></h1>
+      <h1 class="text-light"><a href="/"><span>Plasma Help</span></a></h1>
     </div>
 
     <nav class="nav-menu d-none d-lg-block">
       <ul>
         <li class="active"><a href="/">Home</a></li>
-        <li><a href="#details">About</a></li>
-        <li><a href="#team">Team</a></li>
+        <li><a href="/#details">About</a></li>
+        <li><a href="/#team">Team</a></li>
         <li><a href="{% url 'faq' %}">FAQs</a></li>
         <li><a href="{% url 'query' %}">Feedback</a></li>
 
@@ -32,11 +32,7 @@
             <ul>
               <li><a href="{% url 'register-donor' %}">As Donor</a></li>
               <li><a href="{% url 'register-hospital' %}">For Hospitals</a>
-              {% comment %} <li class="drop-down"><a href="#">Hospital Signup</a> {% endcomment %}
-                {% comment %} <ul>
-                  <li><a href="#">Maza</a></li>
-                  <li><a href="#">aagaya</a></li>
-                </ul> {% endcomment %}
+
               </li>
             </ul>
           </li>
