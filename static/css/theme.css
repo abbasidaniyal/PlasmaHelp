@@ -1,4 +1,4 @@
-button {
+.button {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -13,18 +13,21 @@ button {
   transition: 0.5s;
   color: #fff;
   background: #1acc8d;
-} button:hover {
+} .button:hover {
   background: #17b57d;
+} .button a {
+  color: inherit;
+  font-size: inherit;
 }
 
-button[class~="secondary"] {
+.button[class~="secondary"] {
   color: #000;
   background: #98b1bb;
-} button[class~="secondary"]:hover {
+} .button[class~="secondary"]:hover {
   background: #74878f;
 }
 
-button[class~="full-width"] {
+.button[class~="full-width"] {
   width: 100%;
 }
 
@@ -32,6 +35,78 @@ button[class~="full-width"] {
 
 input {
   padding: 0.5em 1em;
+  margin: 0.5em 0;
   border: 1px solid gray;
   border-radius: 1em;
+}
+
+/* -------------------------------- */
+
+.card {
+  background: #d8d8d8;
+  text-align: center;
+  position: relative;
+  border: none;
+}
+
+.card img {
+  transition: all ease-in-out 0.4s;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card .card-content {
+  left: 0px;
+  right: 0px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px 0;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card h4 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #01036f;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.card h4::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: #0d12fc;
+  bottom: 0;
+  left: calc(50% - 25px);
+}
+
+.card span {
+  font-style: italic;
+  display: block;
+  font-size: 13px;
+  color: #01036f;
+}
+
+.card .social {
+  margin-top: 10px;
+}
+
+.card .social a {
+  transition: color 0.3s;
+  color: #01036f;
+}
+
+.card .social a:hover {
+  color: #1acc8d;
+}
+
+.card .social i {
+  font-size: 16px;
+  margin: 0 2px;
 }

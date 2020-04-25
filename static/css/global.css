@@ -5,7 +5,10 @@
 input:focus {
   outline: none !important;
 }
+button:focus {
+  outline: none !important;
+}
 
 section {
-  padding: 2em 0;
+  padding: 2em;
 }
