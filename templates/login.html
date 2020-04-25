@@ -7,8 +7,8 @@
 {% block content %}
   <section id="login-form-page">
     <div id="content-container" class="container p-none">
+      <h2>Login</h2>
       <div id="login-form-container" class="lgn-container col-lg-8">
-        <h2>Login</h2>
         <form id="login-form" method="post">
           {% csrf_token %}
 
@@ -19,31 +19,26 @@
             {{ hidden_field }}
           {% endfor %}
 
-          <table border="1">
+          <table border="0">
             {% for field in form.visible_fields %}
               <tr>
                 <th>{{ field.label_tag }}</th>
                 <td>
-                  {{ field.errors }}
-                  {{ field }}
-                  {{ field.help_text }}
+                  {{ field.errors }} {{ field }} {{ field.help_text }}
                 </td>
               </tr>
             {% endfor %}
           </table>
         
-          <button class="btn submit-button" type="submit">Login</button>
-          </form>
-
-          {% if form.errors %}
-            <p class=" label label-danger">
-              Your email and password didn't match.
-              Please try again.
-            </p>
-          {% endif %}
-
-          
+          <button class="button full-width submit-button" type="submit">Login</button>
         </form>
+
+        {% if form.errors %}
+          <p class="label label-danger">
+            Your email and password didn't match. <br>
+            Please try again.
+          </p>
+        {% endif %}
       </div>
     </div>
   </section>

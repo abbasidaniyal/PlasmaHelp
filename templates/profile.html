@@ -2,23 +2,24 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-	<section class="container">
+<section class="container">
+	<div class="">
 		<h1>My Profile</h1>
-		
-    <a href="{% url 'password_change' %}">Change Password</a>
-    <form method="post" enctype="multipart/form-data">
-			{% csrf_token %}
-			
-			{{ form|crispy }}
-			
-			<div class="row">
-				<button class="primary submit-button" type="submit">Update</button>
-				<button class="secondary" onclick="goBack()">Back</button>
-			</div>
-    </form>
-	</section>
+		<a class="float-right" href="{% url 'password_change' %}">Change Password</a>
+	</div>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<div class="row">
+			<button class="button submit-button" type="submit">Update</button>
+			<button class="button secondary" onclick="goBack()">Back</button>
+		</div>
+	</form>
+</section>
 {% endblock %}
 
 <script>
-	goBack = () => window.history.back()
+    function goBack() {
+        window.history.back();
+    }
 </script>

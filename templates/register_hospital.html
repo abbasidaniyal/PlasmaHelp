@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section class="container">
+	{% load crispy_forms_tags %}
 
+	<h1>Register your Hospital</h1>
+	<p>Some info here</p>
 
-    {% load crispy_forms_tags %}
+	<form method="post">
+		{% csrf_token %}
+		{{ form|crispy }}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <input class="submit-button" type="submit" value="Register">
-    </form>
-
+		<button class="button full-width submit-button" type="submit">Register</button>
+	</form>
+</section>
 {% endblock %}

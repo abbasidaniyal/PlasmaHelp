@@ -1,4 +1,3 @@
-
 """
 Django settings for plasma_for_covid project.
 
