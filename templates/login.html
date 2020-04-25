@@ -7,8 +7,8 @@
 {% block content %}
   <section id="login-form-page">
     <div id="content-container" class="container p-none">
+      <h2>Login</h2>
       <div id="login-form-container" class="lgn-container col-lg-8">
-        <h2>Login</h2>
         <form id="login-form" method="post">
           {% csrf_token %}
 
@@ -30,18 +30,15 @@
             {% endfor %}
           </table>
         
-          <button class="btn submit-button" type="submit">Login</button>
-          </form>
-
-          {% if form.errors %}
-            <p class=" label label-danger">
-              Your email and password didn't match.
-              Please try again.
-            </p>
-          {% endif %}
-
-          
+          <button class="full-width submit-button" type="submit">Login</button>
         </form>
+
+        {% if form.errors %}
+          <p class="label label-danger">
+            Your email and password didn't match. <br>
+            Please try again.
+          </p>
+        {% endif %}
       </div>
     </div>
   </section>
