@@ -1,3 +1,8 @@
-{% autoescape off %} Hi {{ user.get_full_name }}, Please click on the link to
-confirm your registration, http://{{ domain }}{% url 'activate' uidb64=uid
-token=token %} {% endautoescape %}
+<!-- prettier-ignore -->
+{% autoescape off %} Hi {{ user.get_full_name }},
+    <!-- prettier-ignore -->
+    Please click on the link to confirm your registration.
+    <!-- prettier-ignore -->
+    Link : http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+    <!-- prettier-ignore -->
+{% endautoescape %}
