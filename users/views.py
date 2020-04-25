@@ -147,21 +147,27 @@ class NearbyDonorView(LoginRequiredMixin, ListView):
             distance = 50
 
         lst = []
+        from datetime import date
+
         for donor in DonorProfile.objects.all().filter(is_complete=True):
-            if (
+            tmp = (
                 self.request.user.hospitalprofile.location.distance(donor.location)
                 * 100
-                <= distance
-            ):
+            )
+            if tmp <= distance:
+                donor.distance = "{:.1f}".format(tmp)
+                donor.age = (date.today() - donor.birth_date).days // 365
                 lst.append(donor)
+
         return lst
 
-    def get_context_data(self, **kwargs):
-        context = super(NearbyDonorView, self).get_context_data(**kwargs)
 
-        try:
-            context["filter"] = int(self.request.GET.get("filter", "50"))
-        except ValueError:
-            context["filter"] = 50
+def get_context_data(self, **kwargs):
+    context = super(NearbyDonorView, self).get_context_data(**kwargs)
 
-        return context
+    try:
+        context["filter"] = int(self.request.GET.get("filter", "50"))
+    except ValueError:
+        context["filter"] = 50
+
+    return context

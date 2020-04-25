@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.views.generic import CreateView, ListView
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.contrib import messages
 from content.forms import QueryForm
 from content.models import FAQ
 
