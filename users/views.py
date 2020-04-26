@@ -6,9 +6,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils.encoding import force_text
+from django.utils.html import format_html
 from django.utils.http import urlsafe_base64_decode
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, FormView
 
 from users.forms import *
 from users.utils import send_mail, TokenGenerator
@@ -35,9 +37,37 @@ def activate(request, uidb64, token):
     return render(request, "index.html")
 
 
+class ResendVerification(SuccessMessageMixin, FormView):
+    form_class = ResendActivationEmailForm
+    template_name = "resend_activation.html"
+
+    success_url = "/"
+    success_message = "We have sent you an email with the verification link."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        user = User.objects.get(email=form.cleaned_data.get("email"))
+        send_mail(self.request, user)
+        return response
+
+
 class LoginPageView(LoginView):
     template_name = "login.html"
     redirect_authenticated_user = True
+    authentication_form = LoginForm
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        print("FORM INVALID CALLED!", form.errors["__all__"])
+        if "This account is inactive." in form.errors["__all__"][0]:
+            form.errors["__all__"][0] = format_html(
+                """You account is not active. Kindly check you mail. 
+                If you have not received any mail, <a href='{}'>Click Here</a>""",
+                reverse("resend-verification"),
+            )
+
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class LogoutPageView(LogoutView):

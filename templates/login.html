@@ -35,13 +35,6 @@
                 <p>
                 <h6><a href="{% url 'password_reset' %}">Forgot Password?</a></h6>
                 </p>
-
-                {% if form.errors %}
-                    <p class="label label-danger">
-                        Your email and password didn't match. <br>
-                        Please try again.
-                    </p>
-                {% endif %}
             </div>
         </div>
     </section>

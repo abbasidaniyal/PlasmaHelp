@@ -1,4 +1,5 @@
-from django.urls import path, include
+from django.contrib.auth import views as views
+from django.urls import path
 
 from users.views import (
     LoginPageView,
@@ -6,10 +7,10 @@ from users.views import (
     DonorRegisterView,
     HospitalRegisterView,
     ProfileView,
+    ResendVerification,
     NearbyDonorView,
     activate,
 )
-from django.contrib.auth import views as views
 
 urlpatterns = [
     path("login/", LoginPageView.as_view(), name="login"),
@@ -21,6 +22,11 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="profile"),
     path("hospital_dashboard", NearbyDonorView.as_view(), name="hospital-dashboard"),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
+    path(
+        "resend_verification_link/",
+        ResendVerification.as_view(),
+        name="resend-verification",
+    ),
     path(
         "password_change/", views.PasswordChangeView.as_view(), name="password_change"
     ),
