@@ -1,10 +1,8 @@
-from django.shortcuts import render
-
-from django.views.generic import CreateView, ListView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
+from django.shortcuts import render
+from django.views.generic import CreateView
+
 from content.forms import QueryForm
-from content.models import FAQ
 
 
 def send_query(request, object):
@@ -13,6 +11,10 @@ def send_query(request, object):
 
 def home_page(request):
     return render(request, "index.html")
+
+
+def faq_page(request):
+    return render(request, "content/faqs.html")
 
 
 class QueryPageView(SuccessMessageMixin, CreateView):
@@ -26,9 +28,3 @@ class QueryPageView(SuccessMessageMixin, CreateView):
 
         send_query(self.request, self.object)
         return response
-
-
-class FAQView(ListView):
-    template_name = "content/faqs.html"
-    model = FAQ
-    paginate_by = 50
