@@ -1,12 +1,27 @@
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.views.generic import CreateView
 
 from content.forms import QueryForm
+from plasma_for_covid import settings
+from datetime import datetime
 
 
-def send_query(request, object):
-    pass
+def send_query(request, query):
+    send_mail(
+        "A new query from PlasmaHelp Website",
+        f"""
+Name : {query.name}
+Email : {query.email}
+Contact Number : {query.contact_number}
+DateTime : {datetime.now()} UTC
+Query : {query.query}
+        """,
+        f"{query.email}",
+        [f"{settings.EMAIL_HOST_USER}"],
+        fail_silently=True,
+    )
 
 
 def home_page(request):
