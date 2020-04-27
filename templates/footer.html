@@ -1,127 +1,66 @@
-{% block content %}
-    <footer class="page-footer font-small indigo" style="background: #cccccc">
-
-        <!-- Footer Links -->
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
         <div class="container">
+            <div class="row">
 
-            <!-- Grid row-->
-            <div class="row text-center d-flex justify-content-center pt-5 mb-3">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <h3>Plasma Help</h3>
+                        <p class="pb-3"><em>One donation can save many lives.<br />
+                        Help India fight COVID-19.</em></p>
 
-                <!-- Grid column -->
-                <div class="col-md-2 mb-3">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <a href="/">Home</a>
-                    </h6>
+                    </div>
                 </div>
-                <!-- Grid column -->
 
-                <!-- Grid column -->
-                <div class="col-md-2 mb-3">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <a href="{% url 'about' %}">About</a>
-                    </h6>
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="/#details">About us</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{% url 'query' %}">Feedback</a></li>
+                    </ul>
                 </div>
-                <!-- Grid column -->
-
-                {% if user.is_authenticated %}
-                    <!-- Grid column -->
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text-uppercase font-weight-bold">
-                            <a href="{% url 'profile' %}">Profile</a>
-                        </h6>
-                    </div>
-                    <!-- Grid column -->
-                    <!-- Grid column -->
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text-uppercase font-weight-bold">
-                            <a href="{% url 'logout' %}">Logout</a>
-                        </h6>
-                    </div>
-                    <!-- Grid column -->
-
-                {% else %}
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text-uppercase font-weight-bold">
-                            <a href="{% url 'register-donor' %}">Donor Signup</a>
-                        </h6>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text-uppercase font-weight-bold">
-                            <a href="{% url 'register-hospital' %}">Hospital Signup</a>
-                        </h6>
-                    </div>
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text-uppercase font-weight-bold">
-                            <a href="{% url 'login' %}">Login</a>
-                        </h6>
-                    </div>
-                {% endif %}
-
-
-            </div>
-            <!-- Grid row-->
-            <hr class="rgba-white-light" style="margin: 0 15%;">
-
-            <!-- Grid row-->
-            <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
-
-                <!-- Grid column -->
-                <div class="col-md-8 col-12 mt-5">
-                    <p style="line-height: 1.7rem">This is a simple website used to connect Donors of Plasma and
-                        Hospitals for the treatment of COVID19.
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Reach out to us</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#" class="twitter"><i
+                                class="bx bxl-twitter"></i> Twitter</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#" class="facebook"><i
+                                class="bx bxl-facebook"></i> Facebook</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#" class="instagram"><i
+                                class="bx bxl-instagram"></i> Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <p>
+                        A108 Adam Street <br>
+                        NY 535022, USA<br><br>
+                        <strong>Phone:</strong> +1 5589 55488 55<br>
+                        <strong>Email:</strong> info@example.com<br>
                     </p>
-                    <p>Plasma therapy is recently started in India and this
-                        website will act as a platform to connect nearby donor with hospitals the require plasma..</p>
-                </div>
-                <!-- Grid column -->
-
-            </div>
-            <!-- Grid row-->
-            <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
-
-            <!-- Grid row-->
-            <div class="row pb-3">
-
-                <!-- Grid column -->
-                <div class="col-md-12">
-
-                    <div class="mb-5 flex-center">
-
-                        <!-- Facebook -->
-                        <a class="fb-ic">
-                            <i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
-                        </a>
-                        <!-- Twitter -->
-                        <a class="tw-ic">
-                            <i class="fab fa-twitter fa-lg white-text mr-4"> </i>
-                        </a>
-                        <!-- Google +-->
-                        <a class="gplus-ic">
-                            <i class="fab fa-google-plus-g fa-lg white-text mr-4"> </i>
-                        </a>
-                        <!--Linkedin -->
-                        <a class="li-ic">
-                            <i class="fab fa-linkedin-in fa-lg white-text mr-4"> </i>
-                        </a>
-                        <!--Instagram-->
-                        <a class="ins-ic">
-                            <i class="fab fa-instagram fa-lg white-text mr-4"> </i>
-                        </a>
-                        <!--Pinterest-->
-                        <a class="pin-ic">
-                            <i class="fab fa-pinterest fa-lg white-text"> </i>
-                        </a>
-
-                    </div>
-
                 </div>
 
             </div>
-
         </div>
+    </div>
 
+    <div class="container">
 
-    </footer>
+        <p style="text-align: center"><a href="https://github.com/abbasidaniyal/PlasmaDonorFinder">Made with ❤ for the
+            community and by the community</a></p>
 
-{% endblock %}
-
+        {% comment %} <div class="copyright">
+      &copy; Copyright <strong><span>Bootslander</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/ -->
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div> {% endcomment %}
+    </div>
+</footer><!-- End Footer -->

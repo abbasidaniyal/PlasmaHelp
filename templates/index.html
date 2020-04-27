@@ -1,8 +1,195 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+    <!-- ======= Hero Section ======= -->
+    <section id="hero">
+        <div class="container">
+            <div class="row container">
+                <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
+                    <div data-aos="zoom-out">
+                        <h1><span>Plasma Help :</span> The Plasma Donor Finder</h1>
+                        <h2>
+                        One donation can save many lives,<br />
+                        Help India fight COVID-19.
+                        </h2>
 
-    <h1>THIS IS THE INDEX PAGE</h1>
+                        <a class="scrollto" href="#details">
+                            <button class="button text-center text-lg-left">Learn More</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
+                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+
+        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             viewBox="0 24 150 28 " preserveAspectRatio="none">
+            <defs>
+                <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+            </defs>
+            <g class="wave1">
+                <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+            </g>
+            <g class="wave2">
+                <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+            </g>
+            <g class="wave3">
+                <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+            </g>
+        </svg>
+    </section><!-- End Hero -->
+
+    <!-- ======= Details Section ======= -->
+    <section id="details" class="details">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>What we Do</h2>
+                <p>Our Work</p>
+            </div>
+            <div class="row content">
+                <div class="col-md-4" data-aos="fade-right">
+                    <img src="static/img/details-1.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8 pt-4" data-aos="fade-up">
+                    <h3>What is plasma therapy? And why should I care?</h3>
+                    <p>
+                        Plasma Therapy is method of fighting viral infections is by using plasma (or seraa) from
+                        recovered patients and inserting them into severe and critical patients. The plasma from
+                        recovered patients carries antibodies created naturally to fight the disease. This is an
+                        established treatment strategy in other viral infections, hence it is being tested for SARS
+                        COVID-19 as well.
+
+                    </p>
+                    <p>
+                        Simply speaking, if a person was to get the novel Corona SARS-2 virus in their body, and with
+                        recovery, their immune system would have produced enough of the antibody to have helped knock
+                        off the virus, with plenty to spare. This spare antibody would thus be present in the recovered
+                        patient, and if donated could help in speeding up the recovery and treatment of severe/critical
+                        patients.
+                    </p>
+                    <p>
+                        This plasma, which contains the antibodies to the Corona SARS-2 virus, is injected to an ill
+                        person with COVID-19, they will do what they are destined to do: knock off the virus, and thus
+                        help in the recovery of this patient. This has been done with Ebola, and a couple of other
+                        viruses. Indian Council of Medical Research is at the moment asked hospitals and laboratories to
+                        test whether this will be viable for COVID-19 as well.
+                    </p>
+                    <p>
+
+                        Why should you care? Well, that's pretty obvious.
+                    </p>
+                </div>
+            </div>
+            <div class="row content">
+                <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
+                    <img src="static/img/details-2.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+                    <h3>What is the purpose of this website?</h3>
+                    <p>
+                        This website is a platform which solves a problem of connectivity. Indian Council for Medical
+                        Research, on 14th April 2020 declared that laboratories and hospitals across India can now start
+                        testing for convalescent plasma therapy while treating severe COVID 19 patients. Convalescent
+                        plasma therapy is a well established method in medical sciences while treating patients of viral
+                        diseases.
+
+                    </p>
+                    <ul>
+                        <li><i class="icofont-check"></i> Recovered COVID19 patients sign up as Donors.</li>
+                        <li><i class="icofont-check"></i> Hospitals which require plasma samples also sign up.</li>
+                        <li><i class="icofont-check"></i> Hospitals are able to locate Donors in their vicinity and contact.</li>
+                        <li><i class="icofont-check"></i> Sensitive information about the donors is not publicly released.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Details Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-up">
+                <h2>Team</h2>
+                <p>Our Great Team</p>
+            </div>
+
+            <div class="row" data-aos="fade-left">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="pic"><img src="{% static 'img/team/team-1.jpg' %}" class="img-fluid" alt=""></div>
+                        <div class="card-content">
+                            <h4>Daniyal Abbasi</h4>
+                            <span>Too many spaces</span>
+                            <div class="social">
+                                <a href=""><i class="icofont-twitter"></i></a>
+                                <a href=""><i class="icofont-facebook"></i></a>
+                                <a href=""><i class="icofont-instagram"></i></a>
+                                <a href=""><i class="icofont-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+                    <div class="card" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="pic"><img src="{% static 'img/team/team-2.jpg' %}" class="img-fluid" alt=""></div>
+                        <div class="card-content">
+                            <h4>Omair Khan</h4>
+                            <span>Docker wala</span>
+                            <div class="social">
+                                <a href=""><i class="icofont-twitter"></i></a>
+                                <a href=""><i class="icofont-facebook"></i></a>
+                                <a href=""><i class="icofont-instagram"></i></a>
+                                <a href=""><i class="icofont-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                    <div class="card" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="pic"><img src="{% static 'img/team/team-3.jpg' %}" class="img-fluid" alt=""></div>
+                        <div class="card-content">
+                            <h4>Alisamar Husain</h4>
+                            <span>CSS bitch</span>
+                            <div class="social">
+                                <a href=""><i class="icofont-twitter"></i></a>
+                                <a href=""><i class="icofont-facebook"></i></a>
+                                <a href=""><i class="icofont-instagram"></i></a>
+                                <a href=""><i class="icofont-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                    <div class="card" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="pic"><img src="{% static 'img/team/team-4.jpg' %}" class="img-fluid" alt=""></div>
+                        <div class="card-content">
+                            <h4>Someone else</h4>
+                            <span>To fill space</span>
+                            <div class="social">
+                                <a href=""><i class="icofont-twitter"></i></a>
+                                <a href=""><i class="icofont-facebook"></i></a>
+                                <a href=""><i class="icofont-instagram"></i></a>
+                                <a href=""><i class="icofont-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Team Section -->
+
+    <section></section>
+
 
 {% endblock %}
 

@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-    {% load crispy_forms_tags %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="row">
-            <input class="submit-button" type="submit" value="Update">
-            <button onclick="goBack()">Back</button>
-        </div>
-    </form>
-
+<section class="container">
+	<div class="">
+		<h1>My Profile</h1>
+		<a class="float-right" href="{% url 'password_change' %}">Change Password</a>
+	</div>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<div class="row">
+			<button class="button submit-button" type="submit">Update</button>
+			<button class="button secondary" onclick="goBack()">Back</button>
+		</div>
+	</form>
+</section>
 {% endblock %}
 
 <script>

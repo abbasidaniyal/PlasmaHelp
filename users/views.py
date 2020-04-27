@@ -2,54 +2,112 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import CreateView, UpdateView, ListView
-from django.core.exceptions import PermissionDenied
+from django.urls import reverse
+from django.utils.encoding import force_text
+from django.utils.html import format_html
+from django.utils.http import urlsafe_base64_decode
+from django.views.generic import CreateView, UpdateView, ListView, FormView
+
 from users.forms import *
+from users.utils import send_mail, TokenGenerator
 
 
-def home_page(request):
-    return render(request, 'index.html')
+def activate(request, uidb64, token):
+    # try:
+    print(uidb64, token)
+    uid = force_text(urlsafe_base64_decode(uidb64))
+    user = User.objects.get(pk=uid)
+    # except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+    #     user = None
+    print(user)
+    if user is not None and TokenGenerator().check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(
+            request,
+            "Thank you for your email confirmation. Now you can login your account.",
+        )
+    else:
+        messages.error(request, "Activation link is invalid!")
 
-def about_page(request):
-    return render(request, 'about.html')
+    return render(request, "index.html")
+
+
+class ResendVerification(SuccessMessageMixin, FormView):
+    form_class = ResendActivationEmailForm
+    template_name = "resend_activation.html"
+
+    success_url = "/"
+    success_message = "We have sent you an email with the verification link."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        user = User.objects.get(email=form.cleaned_data.get("email"))
+        send_mail(self.request, user)
+        return response
 
 
 class LoginPageView(LoginView):
-    template_name = 'login_page.html'
+    template_name = "login.html"
     redirect_authenticated_user = True
+    authentication_form = LoginForm
 
-    def dispatch(self, request, *args, **kwargs):
-        response = super().dispatch(request, *args, **kwargs)
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        print("FORM INVALID CALLED!", form.errors["__all__"])
+        if "This account is inactive." in form.errors["__all__"][0]:
+            form.errors["__all__"][0] = format_html(
+                """You account is not active. Kindly check you mail. 
+                If you have not received any mail, <a href='{}'>Click Here</a>""",
+                reverse("resend-verification"),
+            )
 
-        return response
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class LogoutPageView(LogoutView):
-    next_page = 'home-page'
+    next_page = "home-page"
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        messages.add_message(request, messages.INFO, 'Successfully logged out.')
+        messages.add_message(request, messages.INFO, "Successfully logged out.")
         return response
 
 
-class DonorRegisterView(CreateView):
+class DonorRegisterView(SuccessMessageMixin, CreateView):
     form_class = DonorUserForm
-    template_name = 'register_donor.html'
-    success_url = '/login/'
+    template_name = "register_donor.html"
+    success_url = "/"
+    success_message = "Thank you for registration. We have sent you an email. Kindly verify your Account."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        send_mail(self.request, self.object)
+        return response
 
 
-class HospitalRegisterView(CreateView):
+class HospitalRegisterView(SuccessMessageMixin, CreateView):
     form_class = HospitalUserForm
-    template_name = 'register_hospital.html'
-    success_url = '/login/'
+    template_name = "register_hospital.html"
+    success_url = "/"
+    success_message = "Thank you for registration. We have sent you an email. Kindly verify your Account."
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        send_mail(self.request, self.object)
+
+        return response
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
-    template_name = 'profile.html'
-    success_url = '/'
+    template_name = "profile.html"
+    success_url = "/"
 
     def get_object(self):
         user = self.request.user
@@ -77,7 +135,13 @@ class ProfileView(LoginRequiredMixin, UpdateView):
                 obj.is_complete = False
 
         else:
-            if obj.mobile_number and obj.location and obj.hospital_name and obj.hospital_address and obj.mci_registeration_number:
+            if (
+                obj.mobile_number
+                and obj.location
+                and obj.hospital_name
+                and obj.hospital_address
+                and obj.mci_registeration_number
+            ):
                 obj.is_complete = True
             else:
                 obj.is_complete = False
@@ -88,7 +152,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
 
 class NearbyDonorView(LoginRequiredMixin, ListView):
-    template_name = 'nearby_donor.html'
+    template_name = "nearby_donor.html"
     model = DonorProfile
     paginate_by = 50
 
@@ -98,8 +162,10 @@ class NearbyDonorView(LoginRequiredMixin, ListView):
             raise PermissionDenied
 
         elif request.user.hospitalprofile.is_complete is False:
-            messages.warning(request, 'Complete your profile in order to view the Dashboard')
-            return redirect('profile',)
+            messages.warning(
+                request, "Complete your profile in order to view the Dashboard"
+            )
+            return redirect("profile",)
         else:
             response = super().dispatch(request, *args, **kwargs)
         return response
@@ -111,17 +177,27 @@ class NearbyDonorView(LoginRequiredMixin, ListView):
             distance = 50
 
         lst = []
+        from datetime import date
+
         for donor in DonorProfile.objects.all().filter(is_complete=True):
-            if self.request.user.hospitalprofile.location.distance(donor.location) * 100 <= distance:
+            tmp = (
+                self.request.user.hospitalprofile.location.distance(donor.location)
+                * 100
+            )
+            if tmp <= distance:
+                donor.distance = "{:.1f}".format(tmp)
+                donor.age = (date.today() - donor.birth_date).days // 365
                 lst.append(donor)
+
         return lst
 
-    def get_context_data(self, **kwargs):
-        context = super(NearbyDonorView, self).get_context_data(**kwargs)
 
-        try:
-            context['filter'] = int(self.request.GET.get('filter', '50'))
-        except ValueError:
-            context['filter'] = 50
+def get_context_data(self, **kwargs):
+    context = super(NearbyDonorView, self).get_context_data(**kwargs)
 
-        return context
+    try:
+        context["filter"] = int(self.request.GET.get("filter", "50"))
+    except ValueError:
+        context["filter"] = 50
+
+    return context

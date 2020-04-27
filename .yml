@@ -1,0 +1,8 @@
+- name: Make Migration Action
+  uses: creyD/makemigrations_action@v1.0
+- name: HTML Preview
+  uses: pavi2410/html-preview-action@v1a
+- name: Check Spelling (JS, Vue, HTML, Markdown, Text)
+  uses: UnicornGlobal/spellcheck-github-actions@0.4.0
+- name: HTML5 Validator
+  uses: Cyb3r-Jak3/html5validator-action@v0.4

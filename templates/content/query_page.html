@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="container">
+	<h3>We love Feedback</h3>
+
+	<div class="container">
+		<form id="query" method="post">
+			{% csrf_token %}
+			{{ form| crispy }}
+
+			<input class="submit-button" type="submit" value="Submit"/>
+		</form>
+	</div>
+</section>
+	
+{% endblock %}
