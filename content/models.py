@@ -3,6 +3,7 @@ from users.validators import phone_regex
 
 
 class Query(models.Model):
+
     name = models.CharField("Name", max_length=50, null=False)
     email = models.EmailField("email address", null=False)
     contact_number = models.CharField(
@@ -14,7 +15,5 @@ class Query(models.Model):
     query = models.TextField("Query", max_length=200, blank=False)
     date = models.DateTimeField("Recorded at ", editable=False, auto_now=True)
 
-
-class FAQ(models.Model):
-    question = models.TextField("Question", max_length=200)
-    response = models.TextField("Answer", max_length=200)
+    def __str__(self):
+        return self.name + ":" + self.query[:50]

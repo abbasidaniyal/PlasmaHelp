@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, authenticate
 from mapwidgets.widgets import GooglePointFieldWidget
 
 from users.models import DonorProfile, HospitalProfile, User
@@ -77,3 +77,36 @@ class HospitalProfileForm(forms.ModelForm):
             "location",
         )
         widgets = {"location": GooglePointFieldWidget()}
+
+
+class LoginForm(AuthenticationForm):
+    def clean(self):
+        username = self.cleaned_data.get("username")
+        password = self.cleaned_data.get("password")
+        try:
+            if username is not None and password:
+                self.user_cache = authenticate(
+                    self.request, username=username, password=password
+                )
+                if self.user_cache is None:
+                    try:
+                        user_temp = User.objects.get(email=username)
+                    except:
+                        user_temp = None
+
+                    if user_temp is not None:
+                        self.confirm_login_allowed(user_temp)
+                    else:
+                        raise forms.ValidationError(
+                            self.error_messages["invalid_login"],
+                            code="invalid_login",
+                            params={"username": self.username_field.verbose_name},
+                        )
+        except Exception as e:
+            print(e)
+            raise e
+        return self.cleaned_data
+
+
+class ResendActivationEmailForm(forms.Form):
+    email = forms.EmailField(required=True)

@@ -3,7 +3,7 @@
 {% block content %}
 	<section class="container">
 		<h1>Donor List</h1>
-		
+
 		<form method="get" action="{% url 'hospital-dashboard' %}">
 			<label for="kmInput">
 				Circle Radius
@@ -12,18 +12,21 @@
 			default="50"> Km
 			<button class="button" type="button" id="click">Search</button>
 		</form>
-		
-		
+
+
 		<div class="donors-list" data-aos="fade-left">
 			{% for donor in object_list %}
 				<div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
 					<div class="card" data-aos="zoom-in" data-aos-delay="300">
 						<div class="card-content">
-							<h4>{{ donor.user.get_full_name }}</h4>
-							<span><a href=""></a>{{ donor.user.email }}</span>
+							<h4>{{ donor.user.get_full_name }} ({{ donor.age }} Yrs)</h4>
+                            <span>{{ donor.distance }} KM away from your hospital</span>
+							<br />
+							<span><a href="mailto://{{ donor.user.email }}">{{ donor.user.email }}</a></span>
 							<span><a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a></span>
-							<span><button class="button secondary"><a href="media/{{ donor.report }}" target="_blank">See Report</a></button></span>
-							{# {{ donor.report }} #}
+                            <br />
+                            <span><button class="button secondary"><a href="/media/{{ donor.report }}" target="_blank">See Report</a></button></span>
+
 						</div>
 					</div>
 				</div>
@@ -32,7 +35,7 @@
 					<p>No Donors Nearby. Try increasing the distance filter.</p>
 			{% endfor %}
 		</div>
-		
+
 		<script>
 			$("#click").click(function () {
 				window.location = '?filter=' + $("#kmInput").val()

@@ -20,7 +20,7 @@ from plasma_for_covid import settings
 
 
 urlpatterns = [
+    path("", include("content.urls")),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls")),
-    path("", include("content.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
