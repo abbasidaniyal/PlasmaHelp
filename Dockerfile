@@ -13,6 +13,7 @@ RUN apt-get update -y && \
       postgis \
       curl \
       locales \
+      netcat \
       apt-transport-https && \
     rm -rf /var/lib/apt/lists/*
 
