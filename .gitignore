@@ -10,6 +10,7 @@ media
 
 # Production
 *.env
+.env.prod
 prod.*
 .env_postgis
 
