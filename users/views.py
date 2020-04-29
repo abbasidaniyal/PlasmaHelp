@@ -8,19 +8,19 @@ from django.contrib.auth.views import (
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.http import urlsafe_base64_decode
-from django.views.generic import CreateView, UpdateView, ListView, FormView
+from django.views.generic import CreateView, UpdateView, ListView, FormView, View
 
 from users.forms import *
 from users.utils import send_mail_to_user, TokenGenerator
 
 
 def activate(request, uidb64, token):
-
     uid = force_text(urlsafe_base64_decode(uidb64))
     user = User.objects.get(pk=uid)
 
@@ -128,6 +128,19 @@ class ProfileView(LoginRequiredMixin, UpdateView):
             return DonorProfileForm
         else:
             return HospitalProfileForm
+
+
+class DeleteUserView(LoginRequiredMixin, View):
+    model = User
+    success_url = "/"
+    template_name = "user_delete_confirm.html"
+
+    def get(self, request):
+        return render(request, template_name=self.template_name)
+
+    def post(self, request):
+        self.request.user.delete()
+        return HttpResponseRedirect(self.success_url)
 
 
 class NearbyDonorView(LoginRequiredMixin, ListView):
