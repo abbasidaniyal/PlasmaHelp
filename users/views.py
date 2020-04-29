@@ -13,7 +13,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.generic import CreateView, UpdateView, ListView, FormView
 
 from users.forms import *
-from users.utils import send_mail, TokenGenerator
+from users.utils import send_mail_to_user, TokenGenerator
 
 
 def activate(request, uidb64, token):
@@ -48,7 +48,7 @@ class ResendVerification(SuccessMessageMixin, FormView):
         response = super().form_valid(form)
 
         user = User.objects.get(email=form.cleaned_data.get("email"))
-        send_mail(self.request, user)
+        send_mail_to_user(self.request, user)
         return response
 
 
@@ -88,7 +88,7 @@ class DonorRegisterView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
 
-        send_mail(self.request, self.object)
+        send_mail_to_user(self.request, self.object)
         return response
 
 
@@ -100,7 +100,7 @@ class HospitalRegisterView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        send_mail(self.request, self.object)
+        send_mail_to_user(self.request, self.object)
 
         return response
 

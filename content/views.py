@@ -1,7 +1,8 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
 from django.shortcuts import render
 from django.views.generic import CreateView
+
+from users.utils import send_mail
 
 from content.forms import QueryForm
 from plasma_for_covid import settings
