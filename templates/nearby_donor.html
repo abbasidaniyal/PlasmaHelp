@@ -1,45 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<section class="container">
-		<h1>Donor List</h1>
+    <section class="container">
+        <h1>Donor List</h1>
 
-		<form method="get" action="{% url 'hospital-dashboard' %}">
-			<label for="kmInput">
-				Circle Radius
-			</label>
-			<input name="filter" type="number" id="kmInput" placeholder="Enter Kilometers" value="{{ filter }}"
-			default="50"> Km
-			<button class="button" type="button" id="click">Search</button>
-		</form>
+        <form method="get" action="{% url 'hospital-dashboard' %}">
+            <label for="kmInput">
+                Circle Radius
+            </label>
+            <input class="textbox" name="filter" type="number" id="kmInput" placeholder="Enter Kilometers" value="{{ filter }}"
+                   default="50"> Km
+            <button class="button" type="button" id="click">Search</button>
+        </form>
 
 
-		<div class="donors-list" data-aos="fade-left">
-			{% for donor in object_list %}
-				<div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-					<div class="card" data-aos="zoom-in" data-aos-delay="300">
-						<div class="card-content">
-							<h4>{{ donor.user.get_full_name }} ({{ donor.age }} Yrs)</h4>
+        <div class="donors-list" data-aos="fade-left">
+            {% for donor in object_list %}
+                <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                    <div class="card" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="card-content">
+                            <h4>{{ donor.first_name }} {{ donor.last_name }} ({{ donor.age }} Yrs)</h4>
                             <span>{{ donor.distance }} KM away from your hospital</span>
-							<br />
-							<span><a href="mailto://{{ donor.user.email }}">{{ donor.user.email }}</a></span>
-							<span><a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a></span>
-                            <br />
-                            <span><button class="button secondary"><a href="/media/{{ donor.report }}" target="_blank">See Report</a></button></span>
+                            <span>COVID Free since : {{ donor.date_last_tested_negative }}</span>
+                            <span><a href="mailto://{{ donor.user.email }}">{{ donor.user.email }}</a></span>
+                            <span><a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a></span>
+                            <br/>
+                            <span><button class="button secondary"><a href="/media/{{ donor.last_covid_report }}"
+                                                                      target="_blank">COVID19 Test Report</a></button></span>
+                            <span><button class="button secondary"><a href="/media/{{ donor.igg_report }}"
+                                                                      target="_blank">IGG Test Report</a></button></span>
 
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-				{% empty %}
-					<p>No Donors Nearby. Try increasing the distance filter.</p>
-			{% endfor %}
-		</div>
+            {% empty %}
+                <p>No Donors Nearby. Try increasing the distance filter.</p>
+            {% endfor %}
+        </div>
 
-		<script>
-			$("#click").click(function () {
-				window.location = '?filter=' + $("#kmInput").val()
-			});
-		</script>
-	</section>
+        <script>
+            $("#click").click(function () {
+                window.location = '?filter=' + $("#kmInput").val()
+            });
+        </script>
+    </section>
 {% endblock %}
