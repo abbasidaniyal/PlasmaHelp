@@ -65,7 +65,7 @@ class DonorProfile(models.Model):
     def __str__(self):
         if self.user.get_full_name() is not None:
             return self.user.get_full_name()
-        return "NOT CREATE"
+        return "NOT CREATED"
 
 
 class HospitalProfile(models.Model):
@@ -97,7 +97,7 @@ class HospitalProfile(models.Model):
         if self.hospital_name:
             return self.hospital_name
         else:
-            return "NOT CREATE"
+            return "NOT CREATED"
 
 
 @receiver(post_save, sender=User)

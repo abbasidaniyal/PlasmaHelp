@@ -1,7 +1,12 @@
 # from django.urls import  reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import (
+    LoginView,
+    LogoutView,
+    PasswordResetView,
+    PasswordChangeView,
+)
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
@@ -77,6 +82,14 @@ class LogoutPageView(LogoutView):
         response = super().dispatch(request, *args, **kwargs)
         messages.add_message(request, messages.INFO, "Successfully logged out.")
         return response
+
+
+class CustomPasswordResetView(PasswordResetView):
+    form_class = PasswordResetForm
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
 
 
 class DonorRegisterView(SuccessMessageMixin, CreateView):
@@ -191,13 +204,12 @@ class NearbyDonorView(LoginRequiredMixin, ListView):
 
         return lst
 
+    def get_context_data(self, **kwargs):
+        context = super(NearbyDonorView, self).get_context_data(**kwargs)
 
-def get_context_data(self, **kwargs):
-    context = super(NearbyDonorView, self).get_context_data(**kwargs)
+        try:
+            context["filter"] = int(self.request.GET.get("filter", "50"))
+        except ValueError:
+            context["filter"] = 50
 
-    try:
-        context["filter"] = int(self.request.GET.get("filter", "50"))
-    except ValueError:
-        context["filter"] = 50
-
-    return context
+        return context
