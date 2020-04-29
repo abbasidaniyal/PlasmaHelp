@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <section class="container">
+        <div class="">
+            <h3>ARE YOU SURE YOU WANT TO DELETE YOU ACCOUNT?</h3>
+            <h5>This is an irreversible action.</h5>
+
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <button class="button submit-button" type="submit">Delete</button>
+                <button class="button secondary" onclick="goBack()">Back</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

@@ -9,6 +9,7 @@ from users.views import (
     DonorRegisterView,
     HospitalRegisterView,
     ProfileView,
+    DeleteUserView,
     ResendVerification,
     NearbyDonorView,
     activate,
@@ -22,6 +23,7 @@ urlpatterns = [
         "register_hospital/", HospitalRegisterView.as_view(), name="register-hospital"
     ),
     path("profile/", ProfileView.as_view(), name="profile"),
+    path("profile/delete", DeleteUserView.as_view(), name="delete-user"),
     path("hospital_dashboard", NearbyDonorView.as_view(), name="hospital-dashboard"),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
     path(
