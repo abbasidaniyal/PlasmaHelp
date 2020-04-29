@@ -1,4 +1,3 @@
-# from django.urls import  reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
@@ -9,7 +8,6 @@ from django.contrib.auth.views import (
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.encoding import force_text
@@ -22,13 +20,10 @@ from users.utils import send_mail_to_user, TokenGenerator
 
 
 def activate(request, uidb64, token):
-    # try:
-    print(uidb64, token)
+
     uid = force_text(urlsafe_base64_decode(uidb64))
     user = User.objects.get(pk=uid)
-    # except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-    #     user = None
-    print(user)
+
     if user is not None and TokenGenerator().check_token(user, token):
         user.is_active = True
         user.save()
@@ -64,7 +59,6 @@ class LoginPageView(LoginView):
 
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
-        print("FORM INVALID CALLED!", form.errors["__all__"])
         if "This account is inactive." in form.errors["__all__"][0]:
             form.errors["__all__"][0] = format_html(
                 """You account is not active. Kindly check you mail. 
@@ -100,7 +94,6 @@ class DonorRegisterView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-
         send_mail_to_user(self.request, self.object)
         return response
 
@@ -114,7 +107,6 @@ class HospitalRegisterView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         send_mail_to_user(self.request, self.object)
-
         return response
 
 
@@ -136,32 +128,6 @@ class ProfileView(LoginRequiredMixin, UpdateView):
             return DonorProfileForm
         else:
             return HospitalProfileForm
-
-    def form_valid(self, form):
-        form.save(commit=False)
-        obj = form.instance
-
-        if self.request.user.user_type == "DONOR":
-            if obj.mobile_number and obj.location and obj.birth_date and obj.report:
-                obj.is_complete = True
-            else:
-                obj.is_complete = False
-
-        else:
-            if (
-                obj.mobile_number
-                and obj.location
-                and obj.hospital_name
-                and obj.hospital_address
-                and obj.mci_registeration_number
-            ):
-                obj.is_complete = True
-            else:
-                obj.is_complete = False
-
-        form.instance = obj
-        form.save()
-        return HttpResponseRedirect(self.success_url)
 
 
 class NearbyDonorView(LoginRequiredMixin, ListView):

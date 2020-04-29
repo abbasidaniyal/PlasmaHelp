@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (
     authenticate,
     UsernameField,
     PasswordChangeForm,
+    PasswordResetForm,
 )
 from mapwidgets.widgets import GooglePointFieldWidget
 
@@ -29,8 +30,6 @@ class DonorUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            "first_name",
-            "last_name",
             "email",
             "password1",
             "password2",
@@ -38,8 +37,6 @@ class DonorUserForm(UserCreationForm):
 
     def save(self, commit=True):
         user = User(
-            first_name=self.cleaned_data["first_name"],
-            last_name=self.cleaned_data["last_name"],
             email=self.cleaned_data["email"],
             password=self.cleaned_data["password1"],
             is_active=False,
@@ -65,10 +62,25 @@ class DonorProfileForm(forms.ModelForm):
     class Meta:
         model = DonorProfile
 
-        fields = ("mobile_number", "birth_date", "location", "report")
+        fields = (
+            "first_name",
+            "last_name",
+            "mobile_number",
+            "birth_date",
+            "location",
+            "date_last_tested_negative",
+            "last_covid_report",
+            "igg_report",
+        )
         widgets = {
             "birth_date": MyDateInput(
                 attrs={"class": "textbox", "placeholder": "Date of Birth"}
+            ),
+            "date_last_tested_negative": MyDateInput(
+                attrs={
+                    "class": "textbox",
+                    "placeholder": "Date Last COVID19 Negative Test Report",
+                }
             ),
             "location": GooglePointFieldWidget(
                 attrs={"class": "button", "placeholder": "Location"}
@@ -120,8 +132,9 @@ class HospitalProfileForm(forms.ModelForm):
         fields = (
             "hospital_name",
             "hospital_address",
-            "mobile_number",
-            "mci_registeration_number",
+            "contact_person_name",
+            "contact_person_mobile_number",
+            "mci_registration_number",
             "location",
         )
         widgets = {
@@ -182,7 +195,7 @@ class ResendActivationEmailForm(forms.Form):
     )
 
 
-class PasswordResetForm(forms.Form):
+class PasswordResetForm(PasswordResetForm):
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={"class": "textbox", "placeholder": "Email"}),
