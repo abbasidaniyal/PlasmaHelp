@@ -16,4 +16,4 @@ class Query(models.Model):
     date = models.DateTimeField("Recorded at ", editable=False, auto_now=True)
 
     def __str__(self):
-        return self.name + ":" + self.query[:50]
+        return self.name + " : " + self.query[:50]
