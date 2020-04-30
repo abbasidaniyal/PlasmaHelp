@@ -56,9 +56,21 @@ form {
 }
 
 #messages-container .alert {
+	position: relative;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.85);
 	opacity: 0;
 	animation: message-appear 0.5s ease 0.5s forwards;
+	width: 100%;
+}
+
+@media (max-width: 600px) {
+	#messages-container {
+		right: unset !important;
+		max-width: 100% !important;
+	}
+	#messages-container .alert {
+		width: 100%;
+	}
 }
 
 @keyframes message-appear {
