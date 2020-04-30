@@ -136,7 +136,7 @@ class HospitalProfileForm(forms.ModelForm):
             "location",
         )
         widgets = {
-            "location": GooglePointFieldWidget(attrs={"placeholder": "Location"},),
+            "location": GooglePointFieldWidget(),
         }
 
 
