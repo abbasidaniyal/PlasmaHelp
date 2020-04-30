@@ -3,43 +3,78 @@
 <!-- ======= Header ======= -->
 <link href="{% static 'css/header.css' %}" rel="stylesheet">
 
-<header id="header" class="d-flex align-items-center">
-  <div class="container d-flex align-items-center">
+<header>
+    <div class="container">
+        <div class="logo">
+            <h1 class="text-light"><a href="/"><span>Plasma Help</span></a></h1>
+        </div>
 
-    <div class="logo mr-auto">
-      <h1 class="text-light"><a href="/"><span>Plasma Help</span></a></h1>
+        <input type="checkbox" id="sidebar-toggle" hidden="true">
+        <label for="sidebar-toggle" class="hamburger"><span></span></label>
+
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+					<li onclick="closeSidebar()" class="active"><a href="/">Home</a></li>
+					<li onclick="closeSidebar()"><a class="scrollto" href="/#details">About</a></li>
+					<li onclick="closeSidebar()"><a href="{% url 'faq' %}">FAQs</a></li>
+					<li onclick="closeSidebar()"><a href="{% url 'query' %}">Feedback</a></li>
+
+					{% if user.is_authenticated %}
+						{% if user.user_type == "HOSPITAL" %}
+							<li onclick="closeSidebar()"><a href="{% url 'hospital-dashboard' %}">Dashboard</a>  </li>
+						{% endif %}
+
+						<li onclick="closeSidebar()"><a href="{% url 'profile' %}">Profile</a></li>
+						<li onclick="closeSidebar()"><a href="{% url 'logout' %}">Logout</a></li>
+
+					{% else %}
+						<li onclick="closeSidebar()"><a href="{% url 'login' %}">Login</a></li> 
+						<br><br>
+						<li onclick="closeSidebar()"><a href="{% url 'register-donor' %}">Register as Donor</a></li>
+						<li onclick="closeSidebar()"><a href="{% url 'register-hospital' %}">Sign up Hospital</a>
+					{% endif %}
+                </ul>
+            </nav>
+            <div class="accent"></div>
+        </div>
+        <div class="sidebar-shadow" id="sidebar-shadow"></div>
+        
+        <nav class="desktop-nav">
+            <ul>
+                <li class="active"><a href="/">Home</a></li>
+				<li><a class="scrollto" href="/#details">About</a></li>
+				<li><a href="{% url 'faq' %}">FAQs</a></li>
+				<li><a href="{% url 'query' %}">Feedback</a></li>
+
+				{% if user.is_authenticated %}
+					{% if user.user_type == "HOSPITAL" %}
+						<li><a href="{% url 'hospital-dashboard' %}">Dashboard</a>  </li>
+					{% endif %}
+
+					<li><a href="{% url 'profile' %}">Profile</a></li>
+					<li><a href="{% url 'logout' %}">Logout</a></li>
+
+				{% else %}
+					<li><a href="{% url 'login' %}">Login</a></li>
+					<li class="drop-down"><a href="">Sign Up</a>
+						<ul>
+						<li><a href="{% url 'register-donor' %}">As Donor</a></li>
+						<li><a href="{% url 'register-hospital' %}">For Hospitals</a>
+
+						</li>
+						</ul>
+					</li>
+				{% endif %}
+            </ul>
+        </nav>
     </div>
 
-    <nav class="nav-menu d-none d-lg-block">
-      <ul>
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/#details">About</a></li>
-{#        <li><a href="/#team">Team</a></li>#}
-        <li><a href="{% url 'faq' %}">FAQs</a></li>
-        <li><a href="{% url 'query' %}">Feedback</a></li>
-
-        {% if user.is_authenticated %}
-          {% if user.user_type == "HOSPITAL" %}
-            <li><a class="nav-link" href="{% url 'hospital-dashboard' %}">Dashboard</a>  </li>
-          {% endif %}
-
-          <li><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
-          <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-
-        {% else %}
-          <li><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-          <li class="drop-down"><a href="">Sign Up</a>
-            <ul>
-              <li><a href="{% url 'register-donor' %}">As Donor</a></li>
-              <li><a href="{% url 'register-hospital' %}">For Hospitals</a>
-
-              </li>
-            </ul>
-          </li>
-        {% endif %}
-
-      </ul>
-    </nav><!-- .nav-menu -->
-
-  </div>
+    <script>
+        document.getElementById("sidebar-shadow").onclick = closeSidebar
+		
+		function closeSidebar() {
+            document.getElementById("sidebar-toggle").checked = false;
+        }
+    </script>
 </header><!-- End Header -->

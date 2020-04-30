@@ -4,14 +4,28 @@
 {% block content %}
 
 <section class="container">
-	<h3>We love Feedback</h3>
+	<div class="center">
+		<h2>We love Feedback</h2>
+		<p>Use this contact form to get in touch with us and we will get back to you.</p>
+	</div>
+	<br><br>
 
 	<div class="container">
 		<form id="query" method="post">
 			{% csrf_token %}
-			{{ form| crispy }}
+			{{ form.non_field_errors }}
+				{% for hidden_field in form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+				{% endfor %}
 
-			<input class="submit-button" type="submit" value="Submit"/>
+				{% for field in form.visible_fields %}
+						{{ field.errors }} {{ field }} {{ field.help_text }}
+				{% endfor %}
+			<br/><br/>
+			{% comment %} {{ form | crispy }} {% endcomment %}
+
+			<button class="button" type="submit">Submit</button>
 		</form>
 	</div>
 </section>

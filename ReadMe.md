@@ -1,10 +1,13 @@
 # Plasma Donor Finder COVID19
 
-##### UNDER DEVELOPMENT
-
-###### Check Issue tracker for updates
+##### UNDER DEVELOPMENT 
+![GitHub issues](https://img.shields.io/github/issues/abbasidaniyal/PlasmaHelp) ![GitHub](https://img.shields.io/github/license/abbasidaniyal/PlasmaHelp)
 
 This is a simple website used to connect Donors of Plasma and Hospitals for the treatment of COVID19. Plasma therapy is recently started in India and this website will act as a platform to connect nearby donor with hospitals the require plasma.
+
+## System Architecture
+Deployment system architecture
+![PlasmaHelp](https://plasmahelp.org/static/img/system_arch_1.png)
 
 ## Google Maps API
 

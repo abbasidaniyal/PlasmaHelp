@@ -1,100 +1,97 @@
+/* @Overrides */
+
+input:focus {
+	outline: none !important;
+}
+button:focus {
+	outline: none !important;
+}
+form {
+	max-width: 40em;
+	margin: auto;
+}
+
+/* ===================================================== */
+
 #login-form-page {
-    padding: 8em 2em;
-    background: linear-gradient(#0a0099, #010351);
+	padding: 8em 0;
 }
 
 #login-form-page h2 {
-    color: #fff;
-    text-align: center;
-    font-weight: 600;
-    /* width: 100%; */
+	text-align: center;
+	font-weight: 600;
+	width: 100%;
 }
 
 #login-form-container {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    margin: auto;
-    width: fit-content;
-
-    padding: 1em;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid gray;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	margin: auto;
+	width: fit-content;
+	padding: 1em;
+	width: 100%;
 }
 
 #login-form {
-    padding: 1em;
-    margin: auto;
+	padding: 1em;
+	margin: auto;
+	width: 100%;
 }
-
-#login-form .submit-button {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 1px;
-    display: inline-block;
-    padding: 8px 30px;
-    border-radius: 10px;
-    transition: 0.5s;
-    color: #fff;
-    width: 100%;
-    background: #1acc8d;
-}
-
-#login-form .submit-button:hover {
-    background: #17b57d;
+@media (min-width: 600px) {
+	#login-form {
+		width: 70%;
+	}	
 }
 
 /* =========================== */
 
 #messages-container {
-    padding: 1em !important;
-    position: fixed !important;
-    top: 6em !important;
-    right: 10em !important;
-    z-index: 1000 !important;
-    max-width: 35% !important;
+	padding: 1em !important;
+	position: fixed !important;
+	top: 6em !important;
+	right: 10em !important;
+	z-index: 1000 !important;
+	max-width: 35% !important;
 }
 
 #messages-container .alert {
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.85);
-    opacity: 0;
-    animation: message-appear 0.5s ease 0.5s forwards;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.85);
+	opacity: 0;
+	animation: message-appear 0.5s ease 0.5s forwards;
 }
 
 @keyframes message-appear {
-    from {
-        top: -2em;
-        opacity: 0;
-    }
-    to {
-        top: 0;
-        opacity: 1;
-    }
+	from {
+			top: -2em;
+			opacity: 0;
+	}
+	to {
+			top: 0;
+			opacity: 1;
+	}
 }
 
 /* ================================== */
 
 .donor-card {
-
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px 0;
-    border-radius: 0 0 4px 4px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+	left: 0;
+	right: 0;
+	background: rgba(255, 255, 255, 0.9);
+	padding: 15px 0;
+	border-radius: 0 0 4px 4px;
+	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 .donors-list {
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    height: fit-content;
-    padding: 2em;
+	display: flex;
+	flex-flow: row;
+	flex-wrap: wrap;
+	height: fit-content;
+	padding: 2em;
 }
 
 .password-reset {
-    vertical-align: middle;
-    display: inline;
+	vertical-align: middle;
+	display: inline;
 }

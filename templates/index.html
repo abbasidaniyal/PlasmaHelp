@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+    <link href="{% static 'css/hero.css' %}" rel="stylesheet">
     <!-- ======= Hero Section ======= -->
     <section id="hero">
         <div class="container">
@@ -9,8 +10,8 @@
                 <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
                     <div data-aos="zoom-out">
                         <h1><span>Plasma Help :</span> The Plasma Donor Finder</h1>
-                        <h2>
-                            One donation can save many lives,<br/>
+                        <h2 class="font-light">
+                            Your donation can save a life.<br/>
                             Help India fight COVID-19.
                         </h2>
 
@@ -20,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
-                    <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+                    <img src="{% static 'img/undraw_my_location_f9pr.svg' %}" class="img-fluid animated" alt="">
                 </div>
             </div>
         </div>
@@ -44,31 +45,24 @@
 
     <!-- ======= Details Section ======= -->
     <section id="details" class="details">
+        <br><br><br><br>
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>What we Do</h2>
                 <p>Our Work</p>
             </div>
             <div class="row content">
-                <div class="col-md-4" data-aos="fade-right">
-                    <img src="static/img/details-1.png" class="img-fluid" alt="">
+                <div class="col-md-5" data-aos="fade-right">
+                    <img src="static/img/undraw_medical_care_movn.svg" class="img-fluid" alt="">
                 </div>
-                <div class="col-md-8 pt-4" data-aos="fade-up">
-                    <h3>What is plasma therapy? And why should I care?</h3>
+                <div class="col-md-7 pt-4" data-aos="fade-up">
+                    <h3>What is plasma therapy? Why you should care.</h3>
                     <p>
                         Plasma Therapy is method of fighting viral infections is by using plasma (or seraa) from
                         recovered patients and inserting them into severe and critical patients. The plasma from
                         recovered patients carries antibodies created naturally to fight the disease. This is an
                         established treatment strategy in other viral infections, hence it is being tested for SARS
                         COVID-19 as well.
-
-                    </p>
-                    <p>
-                        Simply speaking, if a person was to get the novel Corona SARS-2 virus in their body, and with
-                        recovery, their immune system would have produced enough of the antibody to have helped knock
-                        off the virus, with plenty to spare. This spare antibody would thus be present in the recovered
-                        patient, and if donated could help in speeding up the recovery and treatment of severe/critical
-                        patients.
                     </p>
                     <p>
                         This plasma, which contains the antibodies to the Corona SARS-2 virus, is injected to an ill
@@ -77,15 +71,12 @@
                         viruses. Indian Council of Medical Research is at the moment asked hospitals and laboratories to
                         test whether this will be viable for COVID-19 as well.
                     </p>
-                    <p>
-
-                        Why should you care? Well, that's pretty obvious.
-                    </p>
                 </div>
             </div>
+            <br><br> <br><br><br><br> <br><br>
             <div class="row content">
                 <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
-                    <img src="static/img/details-2.png" class="img-fluid" alt="">
+                    <img src="static/img/undraw_private_data_7q35.svg" class="img-fluid" alt="">
                 </div>
                 <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
                     <h3>What is the purpose of this website?</h3>
@@ -109,8 +100,31 @@
                     </ul>
                 </div>
             </div>
-        </div>
+            <br><br><br><br>
     </section><!-- End Details Section -->
+
+    <section class="container"><!-- Donate Section -->
+            <div class="section-title" data-aos="fade-up">
+                <h2>Help us out</h2>
+                <p>Donate</p>
+            </div>
+
+            <div class="center">
+                <button class="button rounded large">Donate</button>
+            </div>
+
+            <br><br><br>
+
+            <div class="row content ">
+                <div class="col-md-3 order-1 order-md-2" data-aos="fade-left"></div>
+                <div class="col-md-6 order-1 order-md-2" data-aos="fade-left">
+                    <img src="static/img/3677057.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-3 order-1 order-md-2" data-aos="fade-left"></div>
+            </div>
+            <div class="center section-title"><h3>THANK YOU</h3><h4>For your contribution</h4></div>
+        </div>
+    </section><!-- End Donate Section -->
 
     {#    <!-- ======= Team Section ======= -->#}
     {#    <section id="team" class="team">#}
@@ -193,7 +207,5 @@
     {#    </section><!-- End Team Section -->#}
 
     <section></section>
-
-
 {% endblock %}
 
