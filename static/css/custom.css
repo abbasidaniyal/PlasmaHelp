@@ -63,7 +63,7 @@ form {
 	width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
 	#messages-container {
 		right: unset !important;
 		max-width: 100% !important;
