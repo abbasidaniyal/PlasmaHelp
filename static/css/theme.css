@@ -1,10 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Manrope:200,300,400,500,600,700,800&display=swap');
+
+:root {
+  --primary: #3b187c;
+  --primary-dark: #270c58;
+  --secondary: #21d188;
+  --secondary-dark: #179762;
+  --dark: #343344;
+
+  --text-primary: #202020;
+  --text-secondary: #888;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.center {
+  text-align: center;
+}
+
+a {
+  color: var(--secondary-dark);
+} a:hover {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", sans-serif;
+}
+h1 {
+  font-weight: bolder;
+}
+h2, h3 {
+  font-weight: bold;
+}
+.font-light {
+  font-weight: 400;
+}
+
+/* ============================================ */
+
 .button {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
   text-align: center;
   display: inline-block;
-  padding: 8px 30px;
+  padding: 12px 30px;
   margin: 0.25em 0;
   margin-right: 1em;
 
@@ -12,41 +64,56 @@
   border-radius: 10px;
   transition: 0.5s;
   color: #fff;
-  background: #1acc8d;
+  background: var(--secondary);
 } .button:hover {
-  background: #17b57d;
+  background: var(--secondary-dark);
 } .button a {
   color: inherit;
   font-size: inherit;
 }
 
 .button[class~="secondary"] {
-  color: #000;
-  background: #98b1bb;
+  color: var(--secondary);
+  background: var(--primary);
 } .button[class~="secondary"]:hover {
-  background: #74878f;
+  background: var(--primary-dark);
 }
 
+.button[class~="default"] {
+  color: var(--primary-dark);
+  background: #fff;
+} .button[class~="default"]:hover {
+  background: #cacaca;
+}
+
+.button[class~="large"] {
+  width: 100%;
+}
 .button[class~="full-width"] {
   width: 100%;
+}
+.button[class~="rounded"] {
+  border-radius: 50%;
 }
 
 /* ---------------------------------- */
 
-input {
-  padding: 0.5em 1em;
+.textbox {
+  width: 100%;
+  padding: 0.75em 1em;
   margin: 0.5em 0;
-  border: 1px solid gray;
-  border-radius: 1em;
+  border: 2px solid #b1b1b1;
+  border-radius: 0.5em;
 }
 
 /* -------------------------------- */
 
 .card {
-  background: #d8d8d8;
+  background: #eeeeee;
   text-align: center;
   position: relative;
   border: none;
+  margin: 1em !important;
 }
 
 .card img {

@@ -19,17 +19,10 @@
                         {{ hidden_field }}
                     {% endfor %}
 
-                    <table border="0">
-                        {% for field in form.visible_fields %}
-                            <tr>
-                                <th>{{ field.label_tag }}</th>
-                                <td>
-                                    {{ field.errors }} {{ field }} {{ field.help_text }}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                    <br/>
+                    {% for field in form.visible_fields %}
+                        {{ field.errors }} {{ field }} {{ field.help_text }}
+                    {% endfor %}
+                    <br/><br/>
                     <button class="button full-width submit-button" type="submit">Login</button>
                 </form>
                 <p>
