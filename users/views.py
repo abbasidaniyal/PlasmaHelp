@@ -134,12 +134,14 @@ class DeleteUserView(LoginRequiredMixin, View):
     model = User
     success_url = "/"
     template_name = "user_delete_confirm.html"
+    redirect_field_name = "login"
 
     def get(self, request):
         return render(request, template_name=self.template_name)
 
     def post(self, request):
-        self.request.user.delete()
+        if "delete" in request.POST:
+            self.request.user.delete()
         return HttpResponseRedirect(self.success_url)
 
 
@@ -185,7 +187,6 @@ class NearbyDonorView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(NearbyDonorView, self).get_context_data(**kwargs)
-
         try:
             context["filter"] = int(self.request.GET.get("filter", "50"))
         except ValueError:

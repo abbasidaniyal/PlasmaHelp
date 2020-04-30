@@ -6,23 +6,31 @@
         <div class="">
             <h1>My Profile</h1>
 
-                <a class="float-right" href="{% url 'delete-user' %}"> Delete Account </a>
-                <a class="float-right" href="{% url 'password_change' %}">Change Password </a>
 
+            <h6><a class="float-right" href="{% url 'password_change' %}">Change Password </a></h6>
+            <br/>
+            <h6><a class="float-right" style="color: red" href="{% url 'delete-user' %}"> Delete Account </a></h6>
+
+            <form method="post" enctype="multipart/form-data" style="max-width:50em;">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="row">
+                    <button class="button submit-button" type="submit">Update</button>
+                    <button class="button secondary" onclick="goBack()">Back</button>
+                </div>
+            </form>
         </div>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <div class="row">
-                <button class="button submit-button" type="submit">Update</button>
-                <button class="button secondary" onclick="goBack()">Back</button>
-            </div>
-        </form>
     </section>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <style>
+        .mw-wrap {
+            width: 100%;
+        }
+    </style>
 {% endblock %}
 
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
