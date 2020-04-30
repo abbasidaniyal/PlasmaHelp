@@ -82,9 +82,7 @@ class DonorProfileForm(forms.ModelForm):
                     "placeholder": "Date Last COVID19 Negative Test Report",
                 }
             ),
-            "location": GooglePointFieldWidget(
-                attrs={"class": "button", "placeholder": "Location"}
-            ),
+            "location": GooglePointFieldWidget(),
         }
 
 
@@ -138,7 +136,7 @@ class HospitalProfileForm(forms.ModelForm):
             "location",
         )
         widgets = {
-            "location": GooglePointFieldWidget(),
+            "location": GooglePointFieldWidget(attrs={"placeholder": "Location"},),
         }
 
 
