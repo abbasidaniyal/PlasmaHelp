@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -15,12 +15,16 @@ from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.http import urlsafe_base64_decode
 from django.views.generic import CreateView, UpdateView, ListView, FormView, View
+from django.contrib.auth import logout
 
 from users.forms import *
+from users.mixins import LoginNotRequiredMixin
 from users.utils import send_mail_to_user, TokenGenerator
 
 
 def activate(request, uidb64, token):
+    logout(request)
+
     uid = force_text(urlsafe_base64_decode(uidb64))
     user = User.objects.get(pk=uid)
 
@@ -34,12 +38,13 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, "Activation link is invalid!")
 
-    return render(request, "index.html")
+    return redirect("/")
 
 
-class ResendVerification(SuccessMessageMixin, FormView):
+class ResendVerification(LoginNotRequiredMixin, SuccessMessageMixin, FormView):
     form_class = ResendActivationEmailForm
     template_name = "resend_activation.html"
+    redirect_field_name = "home-page"
 
     success_url = "/"
     success_message = "We have sent you an email with the verification link."
@@ -86,11 +91,12 @@ class CustomPasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
 
 
-class DonorRegisterView(SuccessMessageMixin, CreateView):
+class DonorRegisterView(LoginNotRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = DonorUserForm
     template_name = "register_donor.html"
     success_url = "/"
     success_message = "Thank you for registration. We have sent you an email. Kindly verify your Account."
+    redirect_field_name = "home-page"
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -98,11 +104,12 @@ class DonorRegisterView(SuccessMessageMixin, CreateView):
         return response
 
 
-class HospitalRegisterView(SuccessMessageMixin, CreateView):
+class HospitalRegisterView(LoginNotRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = HospitalUserForm
     template_name = "register_hospital.html"
     success_url = "/"
     success_message = "Thank you for registration. We have sent you an email. Kindly verify your Account."
+    redirect_field_name = "home-page"
 
     def form_valid(self, form):
         response = super().form_valid(form)

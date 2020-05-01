@@ -45,7 +45,7 @@
 
     <!-- ======= Details Section ======= -->
     <section id="details" class="details">
-        <br><br><br><br>
+        <br/><br/><br/><br/>
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>What we Do</h2>
@@ -53,7 +53,7 @@
             </div>
             <div class="row content">
                 <div class="col-md-5" data-aos="fade-right">
-                    <img src="static/img/undraw_medical_care_movn.svg" class="img-fluid" alt="">
+                    <img src="{% static 'img/undraw_medical_care_movn.svg' %}" class="img-fluid" alt="">
                 </div>
                 <div class="col-md-7 pt-4" data-aos="fade-up">
                     <h3>What is plasma therapy? Why you should care.</h3>
@@ -73,10 +73,10 @@
                     </p>
                 </div>
             </div>
-            <br><br> <br><br><br><br> <br><br>
+            <br/><br/> <br/><br/><br/><br/> <br/><br/>
             <div class="row content">
                 <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
-                    <img src="static/img/undraw_private_data_7q35.svg" class="img-fluid" alt="">
+                    <img src="{% static  'img/undraw_private_data_7q35.svg' %}" class="img-fluid" alt="">
                 </div>
                 <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
                     <h3>What is the purpose of this website?</h3>
@@ -100,12 +100,12 @@
                     </ul>
                 </div>
             </div>
-            <br><br>
+            <br/><br/>
     </section><!-- End Details Section -->
 
     <section class="container"><!-- Donate Section -->
         <div class="section-title" data-aos="fade-up">
-            <h2>Help us out</h2>
+            <h2>Together we can do more</h2>
             <p>Donate</p>
         </div>
 
@@ -113,21 +113,60 @@
         <div class="row content ">
             <div class="col-md-3 order-1 order-md-2" data-aos="fade-left"></div>
             <div class="col-md-6 order-1 order-md-2" data-aos="fade-left">
-                <img src="static/img/3677057.jpg" class="img-fluid" alt="">
+                <img src=" {% static 'img/3677057.jpg' %}" class="img-fluid" alt="">
             </div>
             <div class="col-md-3 order-1 order-md-2" data-aos="fade-left"></div>
         </div>
 
         <div class="center">
-            <button class="button rounded large" onclick=" window.open('https://paypal.me/plasmahelp', '_blank');">
-                Donate
+            <button class="button rounded large" onclick=" location.href='{% url 'register-donor' %}';">
+                Donate Plasma
             </button>
+
         </div>
-           <br><br><br>
-        <div class="center section-title"><h3>THANK YOU</h3><h4>For your contribution</h4></div>
+        <br/><br/>
 
 
     </section><!-- End Donate Section -->
+    <section class="container"><!-- Developer Section -->
+        <div class="section-title" data-aos="fade-up">
+            <h2>Help us out</h2>
+            <p>Developers</p>
+        </div>
+        <div class="row content">
+            <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
+                <img src="{% static  'img/undraw_collaborators_prrw.svg' %}" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+                <h3>Who is the owner of this website?</h3>
+                <p>
+                    No one. This is a community driven open sourced project. <br/>We are a group of socially diligent
+                    students
+                    who decided not to sit idle during this lockdown. You
+                    are welcome to join us as we try our level best to help the country. We are not only welcoming web
+                    developer, but anyone who is willing to help or contribute in any form.<br/> Reach out to us at <a
+                        href="mailto:plasma.help2020@gmail.com">plasma.help2020@gmail.com</a>
+                </p>
+                <p>
+                    Feel free to have a look at <a
+                        href="https://github.com/abbasidaniyal/PlasmaHelp">our code</a>.
+                </p>
+            </div>
+        </div>
+        <br/><br/>
+        <button class="button rounded large" style="background: rebeccapurple"
+                onclick=" window.open('https://paypal.me/plasmahelp', '_blank');">
+            Support the Developers
+        </button>
+        <p><em>
+            NOTE: All the donation made to the link below will be used to sustain this website. Any surplus amount
+            collected will be given out to various charities who are doing their level best to help those in
+            need.
+        </em></p>
+
+        <br/><br/>
+        <div class="center section-title"><h3>THANK YOU</h3><h4>For your contribution</h4></div>
+    </section><!-- End Developer Section -->
 
     {#    <!-- ======= Team Section ======= -->#}
     {#    <section id="team" class="team">#}
