@@ -1,5 +1,7 @@
 {% autoescape off %}
 Hi  {{ user.email }},
 Please click on the link to confirm your registration.
-Link : http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+Link : https://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+If this link gets expired, you can request a new one here : https://{{ domain }}{% url 'resend-verification'  %}
 {% endautoescape %}

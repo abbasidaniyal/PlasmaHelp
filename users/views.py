@@ -34,7 +34,7 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, "Activation link is invalid!")
 
-    return render(request, "index.html")
+    return redirect("/")
 
 
 class ResendVerification(SuccessMessageMixin, FormView):
