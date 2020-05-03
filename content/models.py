@@ -1,5 +1,5 @@
 from django.db import models
-from users.validators import phone_regex
+from profiles.validators import phone_regex
 
 
 class Query(models.Model):

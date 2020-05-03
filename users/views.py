@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -7,15 +8,13 @@ from django.contrib.auth.views import (
     PasswordChangeView,
 )
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.http import urlsafe_base64_decode
-from django.views.generic import CreateView, UpdateView, ListView, FormView, View
-from django.contrib.auth import logout
+from django.views.generic import CreateView, FormView, View
 
 from users.forms import *
 from users.mixins import LoginNotRequiredMixin
@@ -117,26 +116,6 @@ class HospitalRegisterView(LoginNotRequiredMixin, SuccessMessageMixin, CreateVie
         return response
 
 
-class ProfileView(LoginRequiredMixin, UpdateView):
-    template_name = "profile.html"
-    success_url = "/"
-
-    def get_object(self):
-        user = self.request.user
-        if self.request.user.user_type == "DONOR":
-            self.model = DonorProfile
-        else:
-            self.model = HospitalProfile
-
-        return get_object_or_404(self.model, user=user)
-
-    def get_form_class(self):
-        if self.request.user.user_type == "DONOR":
-            return DonorProfileForm
-        else:
-            return HospitalProfileForm
-
-
 class DeleteUserView(LoginRequiredMixin, View):
     model = User
     success_url = "/"
@@ -150,53 +129,3 @@ class DeleteUserView(LoginRequiredMixin, View):
         if "delete" in request.POST:
             self.request.user.delete()
         return HttpResponseRedirect(self.success_url)
-
-
-class NearbyDonorView(LoginRequiredMixin, ListView):
-    template_name = "nearby_donor.html"
-    model = DonorProfile
-    paginate_by = 50
-
-    def dispatch(self, request, *args, **kwargs):
-
-        if request.user.user_type == "DONOR":
-            raise PermissionDenied
-
-        elif request.user.hospitalprofile.is_complete is False:
-            messages.warning(
-                request, "Complete your profile in order to view the Dashboard"
-            )
-            return redirect("profile",)
-        else:
-            response = super().dispatch(request, *args, **kwargs)
-        return response
-
-    def get_queryset(self):
-        try:
-            distance = int(self.request.GET.get("filter", "50"))
-        except ValueError:
-            distance = 50
-
-        lst = []
-        from datetime import date
-
-        for donor in DonorProfile.objects.all().filter(is_complete=True):
-            tmp = (
-                self.request.user.hospitalprofile.location.distance(donor.location)
-                * 100
-            )
-            if tmp <= distance:
-                donor.distance = "{:.1f}".format(tmp)
-                donor.age = (date.today() - donor.birth_date).days // 365
-                lst.append(donor)
-
-        return lst
-
-    def get_context_data(self, **kwargs):
-        context = super(NearbyDonorView, self).get_context_data(**kwargs)
-        try:
-            context["filter"] = int(self.request.GET.get("filter", "50"))
-        except ValueError:
-            context["filter"] = 50
-
-        return context

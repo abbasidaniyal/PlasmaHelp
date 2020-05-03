@@ -25,6 +25,10 @@ Query : {query.query}
     )
 
 
+def privacy_policy(request):
+    return render(request, "privacy_policy.html")
+
+
 def home_page(request):
     return render(request, "index.html")
 

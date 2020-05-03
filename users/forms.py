@@ -7,9 +7,8 @@ from django.contrib.auth.forms import (
     PasswordChangeForm,
     PasswordResetForm,
 )
-from mapwidgets.widgets import GooglePointFieldWidget
 
-from users.models import DonorProfile, HospitalProfile, User
+from users.models import User
 
 
 class MyDateInput(forms.DateInput):
@@ -37,53 +36,13 @@ class DonorUserForm(UserCreationForm):
 
     def save(self, commit=True):
         user = User(
-            email=self.cleaned_data["email"],
-            password=self.cleaned_data["password1"],
-            is_active=False,
+            email=self.cleaned_data["email"], password=self.cleaned_data["password1"],
         )
         user.set_password(self.cleaned_data["password1"])
         user.user_type = "DONOR"
         if commit:
             user.save()
         return user
-
-
-class DonorProfileForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for _, value in self.fields.items():
-            value.widget.attrs["placeholder"] = value.label
-            if value.required:
-                value.widget.attrs["placeholder"] = (
-                    value.widget.attrs["placeholder"] + "*"
-                )
-            value.widget.attrs["class"] = "textbox"
-
-    class Meta:
-        model = DonorProfile
-
-        fields = (
-            "first_name",
-            "last_name",
-            "mobile_number",
-            "birth_date",
-            "location",
-            "date_last_tested_negative",
-            "last_covid_report",
-            "igg_report",
-        )
-        widgets = {
-            "birth_date": MyDateInput(
-                attrs={"class": "textbox", "placeholder": "Date of Birth"}
-            ),
-            "date_last_tested_negative": MyDateInput(
-                attrs={
-                    "class": "textbox",
-                    "placeholder": "Date Last COVID19 Negative Test Report",
-                }
-            ),
-            "location": GooglePointFieldWidget(),
-        }
 
 
 class HospitalUserForm(UserCreationForm):
@@ -106,38 +65,12 @@ class HospitalUserForm(UserCreationForm):
         )
 
     def save(self, commit=True):
-        user = User(email=self.cleaned_data["email"], is_active=False)
+        user = User(email=self.cleaned_data["email"])
         user.set_password(self.cleaned_data["password1"])
         user.user_type = "HOSPITAL"
         if commit:
             user.save()
         return user
-
-
-class HospitalProfileForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for _, value in self.fields.items():
-            value.widget.attrs["placeholder"] = value.label
-            if value.required:
-                value.widget.attrs["placeholder"] = (
-                    value.widget.attrs["placeholder"] + "*"
-                )
-            value.widget.attrs["class"] = "textbox"
-
-    class Meta:
-        model = HospitalProfile
-        fields = (
-            "hospital_name",
-            "hospital_address",
-            "contact_person_name",
-            "contact_person_mobile_number",
-            "mci_registration_number",
-            "location",
-        )
-        widgets = {
-            "location": GooglePointFieldWidget(),
-        }
 
 
 class LoginForm(AuthenticationForm):
