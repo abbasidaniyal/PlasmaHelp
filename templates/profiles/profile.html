@@ -3,52 +3,73 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <style>
+    <section id="profile-page" class="container">
+        
+        <h1>My Profile</h1>
+        <h6><a href="{% url 'profile-edit' %}">Edit Profile</a></h6><br>
 
-    </style>
-    <section class="container">
         <div>
-            <h1>My Profile</h1>
-            <h6><a class="float-right" href="{% url 'profile-edit' %}">Edit Profile</a></h6>
-
             <div class="profile">
-
-
                 {% if profile_type == 'DONOR' %}
-                    <p><strong>Name </strong>: {{ profile.first_name }} {{ profile.last_name }}</p>
-                    <p><strong>Date of Birth </strong>: {{ profile.birth_date }}</p>
-                    <p><strong>Email Address </strong>: {{ profile.user.email }}</p>
-                    <p><strong>Contact Number </strong>: {{ profile.mobile_number }}</p>
-                    <p><strong>Date last tested negative </strong>: {{ profile.date_last_tested_negative }}</p>
+                    <div class="card">
+                        <div class="card-content profile-info">
+                            <div class="user-info">
+                                <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+                                <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+                                <p>{{ profile.mobile_number }}</p>
+                            </div>
 
+                            <div class="details">
+                                <p><strong>Date of Birth </strong><br>{{ profile.birth_date }}</p>
+                                <p><strong>Date last tested negative </strong><br>{{ profile.date_last_tested_negative }}</p>
+                            </div>
 
-                    <p><strong>IGG Report </strong>: <a
-                            href=" {% if profile.igg_report %}{{ profile.igg_report.url }}{% endif %}  ">Click
-                        Here</a></p>
-                    <p><strong>Last COVID Report </strong>: <a href="
-                            {% if profile.last_covid_report %}{{ profile.last_covid_report.url }} {% endif %} ">Click
-                        Here</a>
-                    </p>
-
+                            <div class="medical">
+                                <p>
+                                    <strong>IGG Report</strong><br>
+                                    <a href="{% if profile.igg_report %}{{ profile.igg_report.url }}{% endif %} ">Click Here</a>
+                                </p>
+                                <p>
+                                    <strong>Last COVID Report </strong><br>
+                                    <a href="{%if profile.last_covid_report %}{{ profile.last_covid_report.url }}{% endif %}">Click Here</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
                 {% elif profile_type == 'HOSPITAL' %}
-                    <p><strong>Hospital Name </strong>: {{ profile.hospital_name }}</p>
-                    <p><strong>Hospital Address </strong>: {{ profile.hospital_address }}</p>
-                    <p><strong>Contact Person </strong>: {{ profile.contact_person_name }}</p>
-                    <p><strong>Contact Person Mobile Number </strong>: {{ profile.contact_person_mobile_number }}</p>
-                    <p><strong>MCI Registeration Number </strong>: {{ profile.mci_registration_number }}</p>
+                <div class="card">
+                    <div class="card-content profile-info">
+                        <div class="user-info">
+                            <h2>{{ profile.hospital_name }}</h2>
+                            <p><strong>Hospital Address </strong><br>>{{ profile.hospital_address }}</p>
+                        </div>
+
+                        <div class="details">
+                            <p><strong>Contact Person </strong><br>>{{ profile.contact_person_name }}</p>
+                            <p><strong>Contact Person Mobile Number </strong><br>>{{ profile.contact_person_mobile_number }}</p>
+                            <p><strong>MCI Registeration Number </strong><br>>{{ profile.mci_registration_number }}</p>
+                        </div>
+                    </div>
+                </div>
+                    
 
                 {% endif %}
-                <p><strong>Location </strong>:</p>
             </div>
-
-
+        </div>
+    
+        <div class="container" id="map-container">
+            <h4 class="center">My Location</h4>
+            <div id="map" class="mw-map" style="height: 100%;width: 50%"></div>
         </div>
     </section>
-    <div id="map" class="mw-map" style="height: 100%;width: 50%"></div>
+
     <script>
         function initMap() {
-            var myLatLng = {lat: {{ profile.location.y }}, lng: {{ profile.location.x}}};
+            var myLatLng = {
+                lat: parseFloat('{{ profile.location.y }}'), 
+                lng: parseFloat('{{ profile.location.x}}')
+            };
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
