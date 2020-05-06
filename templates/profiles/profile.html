@@ -20,8 +20,14 @@
                     <p><strong>Email Address </strong>: {{ profile.user.email }}</p>
                     <p><strong>Contact Number </strong>: {{ profile.mobile_number }}</p>
                     <p><strong>Date last tested negative </strong>: {{ profile.date_last_tested_negative }}</p>
-                    <p><strong>IGG Report </strong>: <a href="{{ profile.igg_report.url }}  ">Click Here</a></p>
-                    <p><strong>Last COVID Report </strong>: <a href="{{ profile.last_covid_report.url }}">Click Here</a>
+
+
+                    <p><strong>IGG Report </strong>: <a
+                            href=" {% if profile.igg_report %}{{ profile.igg_report.url }}{% endif %}  ">Click
+                        Here</a></p>
+                    <p><strong>Last COVID Report </strong>: <a href="
+                            {% if profile.last_covid_report %}{{ profile.last_covid_report.url }} {% endif %} ">Click
+                        Here</a>
                     </p>
 
 

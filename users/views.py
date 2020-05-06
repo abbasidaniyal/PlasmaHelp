@@ -20,6 +20,8 @@ from users.forms import *
 from users.mixins import LoginNotRequiredMixin
 from users.utils import send_mail_to_user, TokenGenerator
 
+from profiles.models import HospitalProfile, DonorProfile
+
 
 def activate(request, uidb64, token):
     logout(request)
@@ -60,6 +62,20 @@ class LoginPageView(LoginView):
     template_name = "login.html"
     redirect_authenticated_user = True
     authentication_form = LoginForm
+
+    def get_redirect_url(self):
+        if self.request.user.is_authenticated:
+            if (
+                self.request.user.user_type == "DONOR"
+                and len(DonorProfile.objects.filter(user=self.request.user)) is 0
+            ):
+                return "/profile/create"
+            elif (
+                self.request.user.user_type == "HOSPITAL"
+                and len(HospitalProfile.objects.filter(user=self.request.user)) is 0
+            ):
+                return "/profile/create"
+        return "/"
 
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""

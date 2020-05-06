@@ -1,5 +1,4 @@
-from django.db import models
-from django.contrib.gis.db import models as geo_models
+from django.contrib.gis.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -24,15 +23,13 @@ class DonorProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True
     )
-    first_name = models.CharField("First Name", max_length=30, blank=True)
-    last_name = models.CharField("Last Name", max_length=150, blank=True)
+    first_name = models.CharField("First Name", max_length=30, blank=False)
+    last_name = models.CharField("Last Name", max_length=150, blank=False)
     is_complete = models.BooleanField(default=False)
-    location = geo_models.PointField(
-        "Your Location (It will be kept confidential)", null=True, blank=True
+    location = models.PointField(
+        "Your Location (It will be kept confidential)", blank=False
     )
-
-    birth_date = models.DateField("Date of Birth", null=True, blank=True)
-
+    birth_date = models.DateField("Date of Birth", blank=False)
     mobile_number = models.CharField(
         "Contact Number",
         validators=[phone_regex],
@@ -40,40 +37,34 @@ class DonorProfile(models.Model):
         blank=True,
         help_text="Format (+91xxxxxxxxxx)",
     )
+
+    date_last_tested_negative = models.DateField(
+        "Date Last Tested Negative for COVID19 ", blank=False
+    )
     last_covid_report = models.FileField(
         "Last COVID19 Negative Test Report",
         null=True,
-        blank=True,
+        blank=False,
         validators=[validate_file_extension],
         upload_to="last_donor_reports",
     )
 
-    date_last_tested_negative = models.DateField(
-        "Date Last Tested Negative for COVID19 ", null=True, blank=True
-    )
-
     igg_report = models.FileField(
         "Immunoglobulin G (IgG) Test Report",
-        null=True,
-        blank=True,
+        blank=False,
         validators=[validate_file_extension],
         upload_to="igg_donor_reports",
     )
 
     def __str__(self):
-        if (self.first_name and self.last_name) is not None:
-            return self.first_name + " " + self.last_name
-        return "NOT CREATED"
+        return self.first_name + " " + self.last_name
 
     def save(self, *args, **kwargs):
         if (
-            self.mobile_number
-            and self.location
-            and self.birth_date
+            self.location
             and self.last_covid_report
-            and self.first_name
-            and self.last_name
             and self.date_last_tested_negative
+            and self.igg_report
         ):
             self.is_complete = True
         else:
@@ -88,58 +79,30 @@ class HospitalProfile(models.Model):
     is_complete = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
 
-    hospital_name = models.CharField(
-        "Hospital Name", max_length=100, null=True, blank=True
-    )
-    hospital_address = models.TextField(
-        "Hospital Address", max_length=500, null=True, blank=True
-    )
-    location = geo_models.PointField("Hospital Location ", null=True, blank=True)
+    hospital_name = models.CharField("Hospital Name", max_length=100, blank=False)
+    hospital_address = models.CharField("Hospital Address", max_length=500, blank=False)
+    location = models.PointField("Hospital Location ", blank=False)
 
     contact_person_name = models.CharField(
-        "Contact Person Name", max_length=100, null=True, blank=True
+        "Contact Person Name", max_length=100, null=True, blank=False
     )
     contact_person_mobile_number = models.CharField(
         "Contact Number (+91xxxxxxxxxx)",
         validators=[phone_regex],
         max_length=15,
-        blank=True,
+        blank=False,
     )
 
     mci_registration_number = models.CharField(
-        "Medical Counsel of India Registration Number",
-        max_length=50,
-        null=True,
-        blank=True,
+        "Medical Counsel of India Registration Number", max_length=50, blank=False
     )
 
     def __str__(self):
-        if self.hospital_name:
-            return self.hospital_name
-        else:
-            return "NOT CREATED"
+        return self.hospital_name
 
     def save(self, *args, **kwargs):
-        if (
-            self.contact_person_name
-            and self.contact_person_mobile_number
-            and self.location
-            and self.hospital_name
-            and self.hospital_address
-            and self.mci_registration_number
-            and self.contact_person_name
-            and self.contact_person_mobile_number
-        ):
+        if self.contact_person_name and self.contact_person_mobile_number:
             self.is_complete = True
         else:
             self.is_complete = False
         return super().save(*args, **kwargs)
-
-
-@receiver(post_save, sender=User)
-def build_profile_on_user_creation(sender, instance, created, **kwargs):
-    if created:
-        if instance.user_type == "DONOR":
-            DonorProfile.objects.create(user=instance)
-        elif instance.user_type == "HOSPITAL":
-            HospitalProfile.objects.create(user=instance)

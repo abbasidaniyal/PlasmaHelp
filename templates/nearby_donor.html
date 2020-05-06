@@ -6,10 +6,9 @@
 
         <form method="get" action="{% url 'hospital-dashboard' %}">
             <label for="kmInput">
-                Circle Radius
+                Circle Radius (in KMs)
             </label>
-            <input class="textbox" name="filter" type="number" id="kmInput" placeholder="Enter Kilometers" value="{{ filter }}"
-                   default="50"> Km
+            <input class="textbox" name="filter" type="number" id="kmInput" value="{{ filter }}">
             <button class="button" type="button" id="click">Search</button>
         </form>
 
@@ -25,9 +24,10 @@
                             <span><a href="mailto://{{ donor.user.email }}">{{ donor.user.email }}</a></span>
                             <span><a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a></span>
                             <br/>
-                            <span><button class="button secondary"><a href="/media/{{ donor.last_covid_report }}"
-                                                                      target="_blank">COVID19 Test Report</a></button></span>
-                            <span><button class="button secondary"><a href="/media/{{ donor.igg_report }}"
+                            <span><button class="button secondary"><a
+                                    href=" {{ MEDIA_URL }}{{ donor.last_covid_report }}"
+                                    target="_blank">COVID19 Test Report</a></button></span>
+                            <span><button class="button secondary"><a href="{{ MEDIA_URL }}{{ donor.igg_report }}"
                                                                       target="_blank">IGG Test Report</a></button></span>
 
                         </div>

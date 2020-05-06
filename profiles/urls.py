@@ -8,4 +8,5 @@ from profiles.views import *
 urlpatterns = [
     path("", ProfileView.as_view(), name="profile"),
     path("edit/", ProfileEditView.as_view(), name="profile-edit"),
+    path("create/", ProfileCreateView.as_view(), name="profile-create"),
 ]
