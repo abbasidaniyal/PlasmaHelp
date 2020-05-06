@@ -8,6 +8,8 @@ from content.forms import QueryForm
 from plasma_for_covid import settings
 from datetime import datetime
 
+from content.decorators import profile_incomplete_check
+
 
 def send_query(request, query):
     send_mail(
@@ -25,10 +27,17 @@ Query : {query.query}
     )
 
 
+@profile_incomplete_check
+def privacy_policy(request):
+    return render(request, "privacy_policy.html")
+
+
+@profile_incomplete_check
 def home_page(request):
     return render(request, "index.html")
 
 
+@profile_incomplete_check
 def faq_page(request):
     return render(request, "content/faqs.html")
 

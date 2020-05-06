@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "phone_field",
     "crispy_forms",
     "users",
+    "profiles",
     "content",
     "django_extensions",
     "mapwidgets",
@@ -104,8 +105,6 @@ MAP_WIDGETS = {
 
 GOOGLE_MAP_API_KEY = os.environ.get("GOOGLE_API_KEY",)
 
-# from plasma_for_covid.local_settings import DATABASES, MAP_WIDGETS, GOOGLE_MAP_API_KEY
-
 # Custom User Model
 AUTH_USER_MODEL = "users.User"
 
@@ -137,6 +136,7 @@ USE_TZ = True
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/users/login/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

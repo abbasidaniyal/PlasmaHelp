@@ -16,17 +16,12 @@
                 {{ form|crispy }}
                 <div class="row">
                     <button class="button submit-button" type="submit">Update</button>
-                    <button class="button secondary" onclick="goBack()">Back</button>
+                    <button class="button secondary"><a href="{% url 'profile' %}">Cancel</a></button>
                 </div>
             </form>
         </div>
     </section>
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
     <style>
         .mw-wrap {
             width: 100%;
