@@ -155,13 +155,14 @@ class NearbyDonorView(UserPassesTestMixin, LoginRequiredMixin, ListView):
         from datetime import date
 
         hospital_location = self.request.user.hospitalprofile.location
-        query_set = DonorProfile.objects.filter(
-            is_complete=True, location__distance_lte=(hospital_location, D(km=distance))
+        query_set = DonorProfile.objects.filter(is_complete=True).filter(
+            location__distance_lte=(hospital_location, D(km=distance))
         )
         for donor in query_set:
             donor.age = (date.today() - donor.birth_date).days // 365
+            donor.distance = "{:.2f}".format(hospital_location.distance(donor.location))
 
-        return query_set
+        return sorted(query_set, key=lambda x: x.distance)
 
     def get_context_data(self, **kwargs):
         context = super(NearbyDonorView, self).get_context_data(**kwargs)
