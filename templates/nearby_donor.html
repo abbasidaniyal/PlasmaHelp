@@ -24,11 +24,12 @@
                             <span><a href="mailto://{{ donor.user.email }}">{{ donor.user.email }}</a></span>
                             <span><a href="tel://{{ donor.mobile_number }}">{{ donor.mobile_number }}</a></span>
                             <br/>
-                            <span><button class="button secondary"><a
+                            <span><button class="button secondary" style="margin: 5px"><a
                                     href=" {{ MEDIA_URL }}{{ donor.last_covid_report }}"
                                     target="_blank">COVID19 Test Report</a></button></span>
-                            <span><button class="button secondary"><a href="{{ MEDIA_URL }}{{ donor.igg_report }}"
-                                                                      target="_blank">IGG Test Report</a></button></span>
+                            <span><button class="button secondary" style="margin: 0px"><a
+                                    href="{{ MEDIA_URL }}{{ donor.igg_report }}"
+                                    target="_blank">IGG Test Report</a></button></span>
 
                         </div>
                     </div>
