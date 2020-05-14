@@ -1,6 +1,8 @@
 from functools import wraps
+
 from django.contrib import messages
-from profiles.models import *
+
+from profiles.models import HospitalProfile, DonorProfile
 
 
 def profile_incomplete_check(view):

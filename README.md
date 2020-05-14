@@ -1,6 +1,5 @@
-# Plasma Donor Finder COVID19
-
-##### UNDER DEVELOPMENT 
+# Plasma Help COVID19
+ 
 ![GitHub issues](https://img.shields.io/github/issues/abbasidaniyal/PlasmaHelp) ![GitHub](https://img.shields.io/github/license/abbasidaniyal/PlasmaHelp)
 
 This is a simple website used to connect Donors of Plasma and Hospitals for the treatment of COVID19. Plasma therapy is recently started in India and this website will act as a platform to connect nearby donor with hospitals the require plasma.
@@ -26,7 +25,7 @@ Add the API KEY to the .env file. (Follow the installation below)
 1. Clone the repository by running the following command in the terminal :
 
    ```shell
-   git clone https://github.com/abbasidaniyal/PlasmaDonorFinder.git
+   git clone https://github.com/abbasidaniyal/PlasmaHelp.git
    ```
 
 2. Install virtualenv. Run the following commands in terminal:
@@ -45,12 +44,13 @@ Add the API KEY to the .env file. (Follow the installation below)
 
 4. navigate into the repository by running the following command in terminal:
    ```shell
-   cd PlasmaDonorFinder
+   cd plasmahelp
    ```
 5. Install dependencies by running the following command:
    ```shell
    pip install -r requirements.txt
    ```
+5. Create a .env file using the .env.sample format in the root directory 
 6. Run the Django standard runserver steps:
    ```shell
    python manage.py makemigrations

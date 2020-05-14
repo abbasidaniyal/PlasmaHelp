@@ -16,10 +16,9 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
+from django.conf import settings
 
-from plasma_for_covid import settings
-from profiles.views import *
+from profiles.views import NearbyDonorView
 
 urlpatterns = [
     path("", include("content.urls")),

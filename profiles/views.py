@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import UpdateView, ListView, View, CreateView
 from django.contrib.gis.measure import D
-from django.forms.models import model_to_dict
 from django.conf import settings
+
 from profiles.forms import (
     DonorProfileCreateForm,
     HospitalProfileCreateForm,

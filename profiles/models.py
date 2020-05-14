@@ -1,8 +1,6 @@
 from django.contrib.gis.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
-from plasma_for_covid import settings
+from django.conf import settings
 from profiles.validators import validate_file_extension, phone_regex
 from users.models import User
 
