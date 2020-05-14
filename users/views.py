@@ -19,7 +19,6 @@ from django.views.generic import CreateView, FormView, View
 from users.forms import *
 from users.mixins import LoginNotRequiredMixin
 from users.utils import send_mail_to_user, TokenGenerator
-
 from profiles.models import HospitalProfile, DonorProfile
 
 
