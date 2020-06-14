@@ -20,7 +20,7 @@ urlpatterns = [
     path(
         "register_hospital/", HospitalRegisterView.as_view(), name="register-hospital"
     ),
-    path("profile/delete", DeleteUserView.as_view(), name="delete-user"),
+    path("profile/delete/", DeleteUserView.as_view(), name="delete-user"),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
     path(
         "resend_verification_link/",
