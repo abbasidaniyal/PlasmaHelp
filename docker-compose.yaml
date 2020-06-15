@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    network_mode: host
+    env_file:
+      - project/.env
+  db:
+    image: kartoza/postgis:12.0
+    environment:
+      - POSTGRES_USER=app_user
+      - POSTGRES_PASS=pass
+      - POSTGRES_DBNAME=my_db
+    volumes:
+      - ./postgres:/var/lib/postgresql/data

@@ -1,7 +1,8 @@
 # Base Image
-FROM python:3.7
+FROM ubuntu:20.04
 
 # Set working dor
+RUN mkdir -p /code
 WORKDIR /code
 
 # Environment Variables
@@ -9,26 +10,18 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Install Dependencies
-RUN apt-get update -y && \
-    apt-get install --auto-remove -y \
-      binutils \
-      libproj-dev \
-      gdal-bin \
-      postgis \
-      curl \
-      locales \
-      netcat \
-      apt-transport-https && \
-    rm -rf /var/lib/apt/lists/*
+COPY project/docker_scripts/install.sh .
+RUN chmod 700 install.sh
+RUN ./install.sh
 
+# Python Dependencies
+COPY project/requirements.txt /code/requirements.txt
+RUN pip3 install -r requirements.txt
 
-RUN pip install --upgrade pip
-COPY ./requirements.txt /code/requirements.txt
-RUN pip install -r requirements.txt
 
 # Copy Project
-COPY . /code
+COPY project/ /code
 
-RUN chmod 700 /code/django_setup.sh
-RUN /code/django_setup.sh
-ENTRYPOINT ["uvicorn" ,"plasma_for_covid.asgi:application" ,"--host", "0.0.0.0","--port","8000","--reload"]
+RUN chmod 700 /code/docker_scripts/start.sh
+
+ENTRYPOINT ["/code/docker_scripts/start.sh"]
