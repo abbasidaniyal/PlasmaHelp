@@ -19,7 +19,7 @@ from django.views.generic import CreateView, FormView, View
 from users.forms import *
 from users.mixins import LoginNotRequiredMixin
 from users.utils import send_mail_to_user, TokenGenerator
-from profiles.models import HospitalProfile, DonorProfile
+from profiles.models import HospitalProfile, DonorProfile, PatientProfile
 
 
 def activate(request, uidb64, token):
@@ -66,12 +66,17 @@ class LoginPageView(LoginView):
         if self.request.user.is_authenticated:
             if (
                 self.request.user.user_type == "DONOR"
-                and len(DonorProfile.objects.filter(user=self.request.user)) is 0
+                and len(DonorProfile.objects.filter(user=self.request.user)) == 0
             ):
                 return "/profile/create"
             elif (
                 self.request.user.user_type == "HOSPITAL"
-                and len(HospitalProfile.objects.filter(user=self.request.user)) is 0
+                and len(HospitalProfile.objects.filter(user=self.request.user)) == 0
+            ):
+                return "/profile/create"
+            elif (
+                self.request.user.user_type == "PATIENT"
+                and len(PatientProfile.objects.filter(user=self.request.user)) == 0
             ):
                 return "/profile/create"
         return "/"
@@ -108,6 +113,19 @@ class CustomPasswordChangeView(PasswordChangeView):
 class DonorRegisterView(LoginNotRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = DonorUserForm
     template_name = "register_donor.html"
+    success_url = "/"
+    success_message = "Thank you for registration. We have sent you an email. Kindly verify your Account."
+    redirect_field_name = "home-page"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        send_mail_to_user(self.request, self.object)
+        return response
+
+
+class PatientRegisterView(LoginNotRequiredMixin, SuccessMessageMixin, CreateView):
+    form_class = PatientUserForm
+    template_name = "register_patient.html"
     success_url = "/"
     success_message = "Thank you for registration. We have sent you an email. Kindly verify your Account."
     redirect_field_name = "home-page"

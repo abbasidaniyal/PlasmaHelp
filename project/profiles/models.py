@@ -70,6 +70,47 @@ class DonorProfile(models.Model):
         return super().save(*args, **kwargs)
 
 
+class PatientProfile(models.Model):
+    """
+    Patient profile details.
+
+    :parameter
+    user : One to one mapping with the django user model
+    birth_day : Date of Birth of user
+    email : Email Address of the Donor
+    mobile_number : Mobile Number of Donor (optional)
+    """
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True
+    )
+    first_name = models.CharField("First Name", max_length=30, blank=False)
+    last_name = models.CharField("Last Name", max_length=150, blank=False)
+    is_complete = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    location = models.PointField(
+        "Your Location (It will be kept confidential)", blank=False
+    )
+    birth_date = models.DateField("Date of Birth", blank=False)
+    mobile_number = models.CharField(
+        "Contact Number",
+        validators=[phone_regex],
+        max_length=15,
+        blank=True,
+        help_text="Format (+91xxxxxxxxxx)",
+    )
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
+    def save(self, *args, **kwargs):
+        if self.location:
+            self.is_complete = True
+        else:
+            self.is_complete = False
+        return super().save(*args, **kwargs)
+
+
 class HospitalProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True

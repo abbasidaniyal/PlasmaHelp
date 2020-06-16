@@ -5,7 +5,12 @@ from users.managers import CustomUserManager
 
 
 class User(AbstractUser):
-    user_options = [("DONOR", "Donor"), ("HOSPITAL", "Hospital"), ("STAFF", "Staff")]
+    user_options = [
+        ("DONOR", "Donor"),
+        ("HOSPITAL", "Hospital"),
+        ("PATIENT", "Patient"),
+        ("STAFF", "Staff"),
+    ]
     user_type = models.CharField(
         max_length=20, choices=user_options, null=False, blank=False
     )

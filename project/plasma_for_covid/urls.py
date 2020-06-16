@@ -24,7 +24,7 @@ urlpatterns = [
     path("", include("content.urls")),
     path("admin/", admin.site.urls),
     path("profile/", include("profiles.urls")),
-    path("hospital_dashboard", NearbyDonorView.as_view(), name="hospital-dashboard"),
+    path("dashboard", NearbyDonorView.as_view(), name="hospital-dashboard"),
     path("users/", include("users.urls")),
 ]
 

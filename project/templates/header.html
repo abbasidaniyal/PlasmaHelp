@@ -15,65 +15,71 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
-					<li onclick="closeSidebar()" class="active"><a href="/">Home</a></li>
-					<li onclick="closeSidebar()"><a class="scrollto" href="/#details">About</a></li>
-					<li onclick="closeSidebar()"><a href="{% url 'faq' %}">FAQs</a></li>
-					<li onclick="closeSidebar()"><a href="{% url 'query' %}">Feedback</a></li>
+                    <li onclick="closeSidebar()" class="active"><a href="/">Home</a></li>
+                    <li onclick="closeSidebar()"><a class="scrollto" href="/#details">About</a></li>
+                    <li onclick="closeSidebar()"><a href="{% url 'faq' %}">FAQs</a></li>
+                    <li onclick="closeSidebar()"><a href="{% url 'query' %}">Feedback</a></li>
 
-					{% if user.is_authenticated %}
-						{% if user.user_type == "HOSPITAL" %}
-							<li onclick="closeSidebar()"><a href="{% url 'hospital-dashboard' %}">Dashboard</a>  </li>
-						{% endif %}
+                    {% if user.is_authenticated %}
+                        {% if user.user_type == "HOSPITAL" %}
+                            <li onclick="closeSidebar()"><a href="{% url 'hospital-dashboard' %}">Donor Dashboard</a></li>
+                        {% elif user.user_type == "PATIENT" %}
+                            <li onclick="closeSidebar()"><a href="{% url 'hospital-dashboard' %}">Nearby Donors</a></li>
+                        {% endif %}
 
-						<li onclick="closeSidebar()"><a href="{% url 'profile' %}">Profile</a></li>
-						<li onclick="closeSidebar()"><a href="{% url 'logout' %}">Logout</a></li>
+                        <li onclick="closeSidebar()"><a href="{% url 'profile' %}">Profile</a></li>
+                        <li onclick="closeSidebar()"><a href="{% url 'logout' %}">Logout</a></li>
 
-					{% else %}
-						<li onclick="closeSidebar()"><a href="{% url 'login' %}">Login</a></li> 
-						<br><br>
-						<li onclick="closeSidebar()"><a href="{% url 'register-donor' %}">Register as Donor</a></li>
-						<li onclick="closeSidebar()"><a href="{% url 'register-hospital' %}">Sign up Hospital</a>
-					{% endif %}
+                    {% else %}
+                        <li onclick="closeSidebar()"><a href="{% url 'login' %}">Login</a></li>
+                        <br><br>
+                        <li onclick="closeSidebar()"><a href="{% url 'register-donor' %}">Register as Donor</a></li>
+                        <li onclick="closeSidebar()"><a href="{% url 'register-patient' %}">Register as Patient</a></li>
+                        <li onclick="closeSidebar()"><a href="{% url 'register-hospital' %}">Sign up for Hospital</a>
+                    {% endif %}
                 </ul>
             </nav>
             <div class="accent"></div>
         </div>
         <div class="sidebar-shadow" id="sidebar-shadow"></div>
-        
+
         <nav class="desktop-nav">
             <ul>
                 <li class="active"><a href="/">Home</a></li>
-				<li><a class="scrollto" href="/#details">About</a></li>
-				<li><a href="{% url 'faq' %}">FAQs</a></li>
-				<li><a href="{% url 'query' %}">Feedback</a></li>
+                <li><a class="scrollto" href="/#details">About</a></li>
+                <li><a href="{% url 'faq' %}">FAQs</a></li>
+                <li><a href="{% url 'query' %}">Feedback</a></li>
 
-				{% if user.is_authenticated %}
-					{% if user.user_type == "HOSPITAL" %}
-						<li><a href="{% url 'hospital-dashboard' %}">Dashboard</a>  </li>
-					{% endif %}
+                {% if user.is_authenticated %}
+                    {% if user.user_type == "HOSPITAL" %}
+                        <li><a href="{% url 'hospital-dashboard' %}">Donor Dashboard</a></li>
+                        {% elif user.user_type == "PATIENT" %}
+                        <li><a href="{% url 'hospital-dashboard' %}">Nearby Donors</a></li>
+                    {% endif %}
 
-					<li><a href="{% url 'profile' %}">Profile</a></li>
-					<li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
 
-				{% else %}
-					<li><a href="{% url 'login' %}">Login</a></li>
-					<li class="drop-down"><a href="">Sign Up</a>
-						<ul>
-						<li><a href="{% url 'register-donor' %}">As Donor</a></li>
-						<li><a href="{% url 'register-hospital' %}">For Hospitals</a>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li class="drop-down"><a href="">Sign Up</a>
+                        <ul>
+                            <li><a href="{% url 'register-donor' %}">As Donor</a></li>
+                            <li><a href="{% url 'register-patient' %}">As Patient</a>
+                            <li><a href="{% url 'register-hospital' %}">For Hospitals</a>
 
-						</li>
-						</ul>
-					</li>
-				{% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </div>
 
     <script>
         document.getElementById("sidebar-shadow").onclick = closeSidebar
-		
-		function closeSidebar() {
+
+        function closeSidebar() {
             document.getElementById("sidebar-toggle").checked = false;
         }
     </script>
