@@ -89,8 +89,7 @@ class PatientProfile(models.Model):
     is_complete = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     location = models.PointField(
-        "Your Location / Hospital's Location (It will be kept confidential)",
-        blank=False,
+        "Your Location (It will be kept confidential)", blank=False
     )
     birth_date = models.DateField("Date of Birth", blank=False)
     mobile_number = models.CharField(
@@ -101,22 +100,11 @@ class PatientProfile(models.Model):
         help_text="Format (+91xxxxxxxxxx)",
     )
 
-    hospital_name_and_address = models.CharField(
-        "Name and Address of Hospital admitted in", max_length=500, blank=False
-    )
-    document_of_proof = models.FileField(
-        "Document for Authentication",
-        blank=False,
-        help_text="This can be your doctor's prescription or a COVID19 test report or any other valid document",
-        validators=[validate_file_extension],
-        upload_to="patient_authentication",
-    )
-
     def __str__(self):
         return self.first_name + " " + self.last_name
 
     def save(self, *args, **kwargs):
-        if self.location and self.document_of_proof:
+        if self.location:
             self.is_complete = True
         else:
             self.is_complete = False

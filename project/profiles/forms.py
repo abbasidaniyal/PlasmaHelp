@@ -65,8 +65,6 @@ class PatientProfileCreateForm(forms.ModelForm):
             "mobile_number",
             "birth_date",
             "location",
-            "hospital_name_and_address",
-            "document_of_proof",
         )
         widgets = {
             "birth_date": MyDateInput(
@@ -151,7 +149,6 @@ class PatientProfileEditForm(forms.ModelForm):
         fields = (
             "mobile_number",
             "location",
-            "hospital_name_and_address",
         )
         widgets = {
             "location": GooglePointFieldWidget(),
