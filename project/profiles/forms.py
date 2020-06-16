@@ -1,6 +1,6 @@
 from django import forms
 from mapwidgets.widgets import GooglePointFieldWidget
-from profiles.models import DonorProfile, HospitalProfile
+from profiles.models import DonorProfile, HospitalProfile, PatientProfile
 
 
 class MyDateInput(forms.DateInput):
@@ -40,6 +40,35 @@ class DonorProfileCreateForm(forms.ModelForm):
                     "class": "textbox",
                     "placeholder": "Date Last COVID19 Negative Test Report",
                 }
+            ),
+            "location": GooglePointFieldWidget(),
+        }
+
+
+class PatientProfileCreateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, value in self.fields.items():
+            value.widget.attrs["placeholder"] = value.label
+            if value.required:
+                value.widget.attrs["placeholder"] = (
+                    value.widget.attrs["placeholder"] + "*"
+                )
+            value.widget.attrs["class"] = "textbox"
+
+    class Meta:
+        model = PatientProfile
+
+        fields = (
+            "first_name",
+            "last_name",
+            "mobile_number",
+            "birth_date",
+            "location",
+        )
+        widgets = {
+            "birth_date": MyDateInput(
+                attrs={"class": "textbox", "placeholder": "Date of Birth"}
             ),
             "location": GooglePointFieldWidget(),
         }
@@ -99,6 +128,29 @@ class DonorProfileEditForm(forms.ModelForm):
                     "placeholder": "Date Last COVID19 Negative Test Report",
                 }
             ),
+            "location": GooglePointFieldWidget(),
+        }
+
+
+class PatientProfileEditForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, value in self.fields.items():
+            value.widget.attrs["placeholder"] = value.label
+            if value.required:
+                value.widget.attrs["placeholder"] = (
+                    value.widget.attrs["placeholder"] + "*"
+                )
+            value.widget.attrs["class"] = "textbox"
+
+    class Meta:
+        model = PatientProfile
+
+        fields = (
+            "mobile_number",
+            "location",
+        )
+        widgets = {
             "location": GooglePointFieldWidget(),
         }
 

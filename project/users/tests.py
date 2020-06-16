@@ -6,7 +6,7 @@ from django.urls import resolve
 import users.views as views
 
 
-class ContentURLTest(SimpleTestCase):
+class URLTest(SimpleTestCase):
     def setUp(self) -> None:
         self.base_url = "/users/"
 
@@ -27,6 +27,12 @@ class ContentURLTest(SimpleTestCase):
         url = reverse("register-donor")
         self.assertEqual(url, self.base_url + "register_donor/")
         self.assertEqual(resolve(url).func.view_class, views.DonorRegisterView)
+
+    @tag("urls")
+    def test_register_patient_page_url(self):
+        url = reverse("register-patient")
+        self.assertEqual(url, self.base_url + "register_patient/")
+        self.assertEqual(resolve(url).func.view_class, views.PatientRegisterView)
 
     @tag("urls")
     def test_register_hospital_url(self):

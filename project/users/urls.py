@@ -7,6 +7,7 @@ from users.views import (
     CustomPasswordResetView,
     CustomPasswordChangeView,
     DonorRegisterView,
+    PatientRegisterView,
     HospitalRegisterView,
     DeleteUserView,
     ResendVerification,
@@ -17,6 +18,7 @@ urlpatterns = [
     path("login/", LoginPageView.as_view(), name="login"),
     path("logout/", LogoutPageView.as_view(), name="logout"),
     path("register_donor/", DonorRegisterView.as_view(), name="register-donor"),
+    path("register_patient/", PatientRegisterView.as_view(), name="register-patient"),
     path(
         "register_hospital/", HospitalRegisterView.as_view(), name="register-hospital"
     ),

@@ -45,6 +45,36 @@ class DonorUserForm(UserCreationForm):
         return user
 
 
+class PatientUserForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, value in self.fields.items():
+            value.widget.attrs["placeholder"] = value.label
+            if value.required:
+                value.widget.attrs["placeholder"] = (
+                    value.widget.attrs["placeholder"] + "*"
+                )
+            value.widget.attrs["class"] = "textbox"
+
+    class Meta:
+        model = User
+        fields = (
+            "email",
+            "password1",
+            "password2",
+        )
+
+    def save(self, commit=True):
+        user = User(
+            email=self.cleaned_data["email"], password=self.cleaned_data["password1"],
+        )
+        user.set_password(self.cleaned_data["password1"])
+        user.user_type = "PATIENT"
+        if commit:
+            user.save()
+        return user
+
+
 class HospitalUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -114,7 +144,6 @@ class LoginForm(AuthenticationForm):
                             params={"username": self.username_field.verbose_name},
                         )
         except Exception as e:
-            print(e)
             raise e
         return self.cleaned_data
 

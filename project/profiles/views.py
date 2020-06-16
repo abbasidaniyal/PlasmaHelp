@@ -12,8 +12,10 @@ from profiles.forms import (
     HospitalProfileCreateForm,
     DonorProfileEditForm,
     HospitalProfileEditForm,
+    PatientProfileCreateForm,
+    PatientProfileEditForm,
 )
-from profiles.models import DonorProfile, HospitalProfile
+from profiles.models import DonorProfile, HospitalProfile, PatientProfile
 
 
 class ProfileView(UserPassesTestMixin, LoginRequiredMixin, View):
@@ -25,6 +27,8 @@ class ProfileView(UserPassesTestMixin, LoginRequiredMixin, View):
             profile = DonorProfile.objects.get(user=request.user)
         elif self.request.user.user_type == "HOSPITAL":
             profile = HospitalProfile.objects.get(user=request.user)
+        elif self.request.user.user_type == "PATIENT":
+            profile = PatientProfile.objects.get(user=request.user)
         else:
             raise PermissionDenied
         context = {
@@ -41,6 +45,8 @@ class ProfileView(UserPassesTestMixin, LoginRequiredMixin, View):
                 DonorProfile.objects.get(user=self.request.user)
             elif self.request.user.user_type == "HOSPITAL":
                 HospitalProfile.objects.get(user=self.request.user)
+            elif self.request.user.user_type == "PATIENT":
+                PatientProfile.objects.get(user=self.request.user)
 
             return True
         except:
@@ -61,6 +67,8 @@ class ProfileEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
             self.model = DonorProfile
         elif self.request.user.user_type == "HOSPITAL":
             self.model = HospitalProfile
+        elif self.request.user.user_type == "PATIENT":
+            self.model = PatientProfile
         else:
             self.model = None
         return get_object_or_404(self.model, user=user)
@@ -70,6 +78,8 @@ class ProfileEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
             return DonorProfileEditForm
         elif self.request.user.user_type == "HOSPITAL":
             return HospitalProfileEditForm
+        elif self.request.user.user_type == "PATIENT":
+            return PatientProfileEditForm
 
     def test_func(self):
 
@@ -78,6 +88,8 @@ class ProfileEditView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
                 DonorProfile.objects.get(user=self.request.user)
             elif self.request.user.user_type == "HOSPITAL":
                 HospitalProfile.objects.get(user=self.request.user)
+            elif self.request.user.user_type == "PATIENT":
+                PatientProfile.objects.get(user=self.request.user)
 
             return True
         except:
@@ -97,6 +109,8 @@ class ProfileCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
             return DonorProfileCreateForm
         elif self.request.user.user_type == "HOSPITAL":
             return HospitalProfileCreateForm
+        elif self.request.user.user_type == "PATIENT":
+            return PatientProfileCreateForm
 
     def test_func(self):
 
@@ -105,6 +119,8 @@ class ProfileCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
                 DonorProfile.objects.get(user=self.request.user)
             elif self.request.user.user_type == "HOSPITAL":
                 HospitalProfile.objects.get(user=self.request.user)
+            elif self.request.user.user_type == "PATIENT":
+                PatientProfile.objects.get(user=self.request.user)
 
             return False
         except:
@@ -130,15 +146,29 @@ class NearbyDonorView(UserPassesTestMixin, LoginRequiredMixin, ListView):
             raise PermissionDenied
 
         try:
-            if isinstance(self.request.user.hospitalprofile, HospitalProfile):
+            if hasattr(self.request.user, "hospitalprofile"):
                 if not self.request.user.hospitalprofile.is_verified:
                     messages.warning(
                         self.request,
                         "Your profile has not been verified. Kindly wait for 2-3 days or contact us at plasma.help2020@gmail.com",
                     )
+
                     return False
                 else:
                     return True
+            elif hasattr(self.request.user, "patientprofile"):
+                if not self.request.user.patientprofile.is_verified:
+                    messages.warning(
+                        self.request,
+                        "Your profile has not been verified. Kindly wait for 6-8 hours or contact us at plasma.help2020@gmail.com incase of an emergency",
+                    )
+                    return False
+                else:
+                    return True
+            else:
+
+                raise Exception
+
         except:
             messages.warning(self.request, "Kindly create your profile first.")
             return False
@@ -154,13 +184,17 @@ class NearbyDonorView(UserPassesTestMixin, LoginRequiredMixin, ListView):
 
         from datetime import date
 
-        hospital_location = self.request.user.hospitalprofile.location
+        if self.request.user.user_type == "HOSPITAL":
+            user_location = self.request.user.hospitalprofile.location
+        elif self.request.user.user_type == "PATIENT":
+            user_location = self.request.user.patientprofile.location
+
         query_set = DonorProfile.objects.filter(is_complete=True).filter(
-            location__distance_lte=(hospital_location, D(km=distance))
+            location__distance_lte=(user_location, D(km=distance))
         )
         for donor in query_set:
             donor.age = (date.today() - donor.birth_date).days // 365
-            donor.distance = "{:.2f}".format(hospital_location.distance(donor.location))
+            donor.distance = "{:.2f}".format(user_location.distance(donor.location))
 
         return sorted(query_set, key=lambda x: x.distance)
 
