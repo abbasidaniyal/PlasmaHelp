@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="container">
-	{% load crispy_forms_tags %}
+    <section class="container">
+        {% load crispy_forms_tags %}
 
-	<div class="center">
-		<h1>Register your Hospital</h1>
-		<p>Some info here</p>
-	</div>
+        <div class="center">
+            <h1>Register your Hospital</h1>
+            <p>Plasma Therapy is method of fighting viral infections is by using plasma (or seraa) from
+                recovered patients and inserting them into severe and critical patients. The plasma from
+                recovered patients carries antibodies created naturally to fight the disease. This is an
+                established treatment strategy in other viral infections, hence it is being tested for SARS
+                COVID-19 as well. </p>
+        </div>
 
-	<form method="post">
-		{% csrf_token %}
-		{{ form|crispy }}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
 
-		<button class="button full-width submit-button" type="submit">Register</button>
-	</form>
-</section>
+            <button class="button full-width submit-button" type="submit">Register</button>
+        </form>
+    </section>
 {% endblock %}
