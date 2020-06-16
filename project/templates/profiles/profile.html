@@ -42,6 +42,21 @@
                                             Here</a>
                                     </p>
                                 </div>
+                                   {% elif profile_type == 'PATIENT' %}
+
+                                <div class="details">
+                                    <p><strong>Date of Birth </strong><br>{{ profile.birth_date }}</p>
+                                    <p><strong>Hospital Admitted in </strong><br>{{ profile.hospital_name_and_address }}</p>
+                                </div>
+
+
+                                <div class="medical">
+                                    <p>
+                                        <strong>Verification Proof</strong><br>
+                                        <a href="{% if profile.document_of_proof %}{{ profile.document_of_proof.url }}{% endif %} ">Click
+                                            Here</a>
+                                    </p>
+
                             {% endif %}
                         </div>
                     </div>

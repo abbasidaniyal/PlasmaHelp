@@ -10,7 +10,7 @@ def validate_file_extension(value):
         ".pdf",
     ]
     if not ext.lower() in valid_extensions:
-        raise ValidationError("Unsupported file extension. Please attach a .pdf file")
+        raise ValidationError("Unsupported file extension. Please attach a pdf file")
 
 
 phone_regex = RegexValidator(
