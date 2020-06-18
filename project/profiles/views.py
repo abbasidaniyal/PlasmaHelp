@@ -7,8 +7,6 @@ from django.views.generic import UpdateView, ListView, View, CreateView
 from django.contrib.gis.measure import D
 from django.conf import settings
 from django.core.mail import send_mail
-from . import forms
-from . import models
 
 
 from profiles.forms import (
@@ -142,8 +140,8 @@ class ProfileCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
             send_mail(
                 'A new hospital has registered on plasma help.',
                 'A new hospital by the name of {} registered, located at {}. The person to be contacted is {} and reach him/her at {}'.format(object.hospital_name,object.hospital_address,object.contact_person_name,object.contact_person_mobile_number),
-                'angad277@gmail.com',
-                ['angad277@gmail.com'],
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
     fail_silently=False,
 )
 
