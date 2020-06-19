@@ -1,6 +1,6 @@
 # Plasma Help COVID19
  
-![GitHub issues](https://img.shields.io/github/issues/abbasidaniyal/PlasmaHelp) ![GitHub](https://img.shields.io/github/license/abbasidaniyal/PlasmaHelp)
+![GitHub issues](https://img.shields.io/github/issues/abbasidaniyal/PlasmaHelp) ![GitHub](https://img.shields.io/github/license/abbasidaniyal/PlasmaHelp) ![Django CI](https://github.com/abbasidaniyal/PlasmaHelp/workflows/Django%20CI/badge.svg?branch=develop)
 
 This is a simple website used to connect Donors of Plasma and Hospitals for the treatment of COVID19. Plasma therapy is recently started in India and this website will act as a platform to connect nearby donor with hospitals the require plasma.
 
