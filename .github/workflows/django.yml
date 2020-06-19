@@ -47,4 +47,4 @@ jobs:
         SQL_HOST: localhost
         SQL_PORT: 5432
       run: |
-        python project/manage.py test
+        python project/manage.py test ./project
