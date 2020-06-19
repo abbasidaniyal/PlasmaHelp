@@ -28,8 +28,10 @@ jobs:
         postgresql db: plasmahelp
         postgresql user: plasmahelp
         postgresql password: plasmahelp
-        
-    - name: Install Dependencies
+    - name: Install Postgis Dependencies    
+      run: |
+        apt install -y postgis gdal-bin
+    - name: Install Django Dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
         pip install -r project/requirements.txt
